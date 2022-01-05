@@ -1,0 +1,4 @@
+﻿  EventManager.cpp
+GameObject.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall IEventHandler::OnEvent(class Event *)" (?OnEvent@IEventHandler@@UAEXPAVEvent@@@Z)
+hero.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall IEventHandler::OnEvent(class Event *)" (?OnEvent@IEventHandler@@UAEXPAVEvent@@@Z)
+C:\Users\Administrator\OneDrive - University of Suffolk\Tutorial 5\Debug\GameEngine SDL Bogdan.exe : fatal error LNK1120: 1 unresolved externals

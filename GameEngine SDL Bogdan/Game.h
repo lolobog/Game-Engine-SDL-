@@ -1,0 +1,53 @@
+#ifndef GAME_H
+#define GAME_H
+#include <stdio.h>;
+#include "bitmap.h";
+#include <string>;
+#include "SDL_ttf.h";
+#include "creature.h";
+#include <vector>
+#include "Scene.h"
+#include "input.h"
+
+using namespace std;
+
+class Game
+{
+	
+private:
+	SDL_Window* m_Window;
+	SDL_Renderer* m_Renderer;
+	bool m_running;
+	Input PlayerInput;
+	
+
+
+public:
+	Game();
+	~Game();
+
+	void SetDisplayColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+	void Update(void) ;
+	void CheckEvents(void) {};
+	void UpdateText(string msg, int x, int y, TTF_Font* font, SDL_Color colour);
+
+	SDL_Renderer& GetRenderer()
+	{
+		return *m_Renderer;
+	}
+	
+	Scene* scene;
+
+
+	TTF_Font* m_pSmallFont;
+	TTF_Font* m_pBigFont;
+
+
+
+
+	
+
+	
+};
+#endif
+
