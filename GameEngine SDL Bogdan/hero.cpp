@@ -12,6 +12,10 @@ Hero::Hero(SDL_Renderer* renderer, Bitmap* bitmap, float _w, float _h, float _x,
 
 
 Hero::~Hero() {}
+void Hero::OnEvent(Event& event)
+{
+
+}
 void Hero::InputUpdate(Input input)
 {
 

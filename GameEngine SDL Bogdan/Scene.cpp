@@ -11,17 +11,11 @@ Scene::Scene(SDL_Renderer* renderer)
 
 	LayerObjects.resize(4);
 	
-	
-	
-	
-	
-	LayerObjects[2].push_back(new GameObject(renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), 0, 0, 10, 10, 10));
+	LayerObjects[playerEnemy].push_back(new GameObject(renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), 20, 20, 200, 100, 10));
 
+	Player = new Hero(renderer,new Bitmap(renderer, "Assets/hero.bmp", true),20,20,100,100,100);
 
-
-	Player = new Hero(renderer,new Bitmap(renderer, "Assets/hero.bmp", true),100,100,100,100,100);
-	Player->AddChild(LayerObjects[2][0]);
-	LayerObjects[2].push_back(Player);
+	LayerObjects[playerEnemy].push_back(Player);
 }
 
 void Scene::Update()

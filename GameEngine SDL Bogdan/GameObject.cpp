@@ -66,7 +66,7 @@ void GameObject::Draw()
 
 	if (m_bitmap->GetTexture())
 	{
-		SDL_Rect destRect = { newTransform.x,newTransform.y,m_bitmap->GetSurface()->w,m_bitmap->GetSurface()->h };
+		SDL_Rect destRect = { newTransform.x,newTransform.y,newTransform.w,newTransform.h };
 		SDL_RenderCopy(m_bitmap->GetRenderer(), m_bitmap->GetTexture(), NULL, &destRect);
 	}
 

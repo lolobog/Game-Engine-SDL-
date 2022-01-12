@@ -5,7 +5,8 @@ enum EventType
 	Event_Object_Collected,
 	Event_Object_Destroyed,
 	Event_Object_Explosion,
-	Event_Player_Seen
+	Event_Player_Seen,
+
 
 };
 

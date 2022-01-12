@@ -3,7 +3,7 @@
 #include "Vector2D.h"
 #include "bitmap.h"
 #include "EventManager.h"
-
+#include <Box2D.h>
 
 struct Transform 
 {
