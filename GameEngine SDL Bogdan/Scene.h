@@ -6,6 +6,15 @@
 using namespace std;
 
 
+enum Layers
+{
+	background,
+	level,
+	playerEnemy,
+	hud,
+	NumLayers
+
+};
 
 class Scene
 {

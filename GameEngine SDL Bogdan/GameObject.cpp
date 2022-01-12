@@ -10,6 +10,8 @@ GameObject::GameObject(SDL_Renderer* renderer, Bitmap* bitmap, float _w, float _
 }
 
 
+
+
 GameObject::GameObject()
 {
 }
@@ -48,13 +50,26 @@ void GameObject::setX(float x)
 
 void GameObject::Draw()
 {
-	
-	
-		if (m_bitmap->GetTexture())
-		{
-			SDL_Rect destRect = { transform->x,transform->y,m_bitmap->GetSurface()->w,m_bitmap->GetSurface()->h };
-			SDL_RenderCopy(m_bitmap->GetRenderer(), m_bitmap->GetTexture(), NULL, &destRect);
-		}
+	Transform newTransform= *this->getTransform();
+	GameObject* newObj=this;
+
+	while (newObj->parent != nullptr)
+	{
+		newTransform.w += parent->getTransform()->w;
+		newTransform.h += parent->getTransform()->h;
+		newTransform.x += parent->getTransform()->x;
+		newTransform.y += parent->getTransform()->y;
+		newTransform.z += parent->getTransform()->z;
+
+		newObj = newObj->parent;
+	}
+
+	if (m_bitmap->GetTexture())
+	{
+		SDL_Rect destRect = { newTransform.x,newTransform.y,m_bitmap->GetSurface()->w,m_bitmap->GetSurface()->h };
+		SDL_RenderCopy(m_bitmap->GetRenderer(), m_bitmap->GetTexture(), NULL, &destRect);
+	}
+
 	
 }
 

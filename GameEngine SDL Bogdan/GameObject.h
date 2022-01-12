@@ -54,6 +54,19 @@ public:
 
 	virtual void OnEvent(Event& event);
 
+	//Hierarchy
+	GameObject* parent = nullptr;
+	std::vector <GameObject*> children;
+
+	void SetParent(GameObject* obj) { this->parent = obj; }
+	void AddChild(GameObject* obj) 
+	{ 
+		children.push_back(obj); 
+		obj->SetParent(this);
+	};
+
+	
+
 	Transform* getTransform() 
 	{ 
 		return transform; 
@@ -78,7 +91,6 @@ public:
 
 	void LogicUpdate();
 
-	
 
 	virtual void Update()
 	{

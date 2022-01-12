@@ -1,8 +1,10 @@
+
 #include "EventManager.h"
 
-bool EventManger::AddListener(EventType type, IEventHandler* listener)
+ bool EventManger::AddListener(EventType type, IEventHandler* listener)
 {
 	listeners[type].push_back(listener);
+	return true;
 }
 
 void EventManger::FireEvent(EventType type, Event* event)
@@ -11,4 +13,8 @@ void EventManger::FireEvent(EventType type, Event* event)
 	{
 		handler->OnEvent(event);
 	}
+}
+
+void IEventHandler::OnEvent(Event* event)
+{
 }
