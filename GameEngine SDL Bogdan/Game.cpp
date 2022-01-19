@@ -69,7 +69,7 @@ Game::Game()
  m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 50);
 
 
-	scene = new Scene(m_Renderer);
+	scene = new Scene(m_Renderer,io);
 
 
 }///
@@ -110,25 +110,25 @@ void Game::Update(void)
 	ImGui::NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_Window);
 	bool show = true;
-	
-	ImGui::ShowDemoWindow(nullptr);
+	scene->Update();
+	//ImGui::ShowDemoWindow(nullptr);
 
-	ImGui::Begin("WINDOW NAME");
+	//ImGui::Begin("WINDOW NAME");
 
-	//.x
-	float x = 1.0f;
+	////.x
+	//float x = 1.0f;
 
-	ImGui::InputFloat("X", scene->LayerObjects[playerEnemy][1]->getTransform()->getXAddr(), 0.1f, 1.0f, "%.3f");
+	////ImGui::InputFloat("X", scene->LayerObjects[playerEnemy][1]->getTransform()->getXAddr(), 0.1f, 1.0f, "%.3f");
 
-	ImGui::InputFloat("Y", scene->LayerObjects[playerEnemy][1]->getTransform()->getYAddr(), 0.1f, 1.0f, "%.3f");
-	
-	ImGui::End();
+	////ImGui::InputFloat("Y", scene->LayerObjects[playerEnemy][1]->getTransform()->getYAddr(), 0.1f, 1.0f, "%.3f");
+	//
+	//ImGui::End();
 
 	ImGui::Render();
 	ImGuiSDL::Render(ImGui::GetDrawData());
 	
 	
-	scene->Update();
+
 	
 	
 

@@ -27,7 +27,7 @@ public:
 
 	 Bitmap* Instance();
 	
-
+	
 	
 
 	SDL_Texture* GetTexture() { return m_pbitmapTexture; }

@@ -4,8 +4,11 @@
 #include "bitmap.h"
 #include "EventManager.h"
 #include <Box2D.h>
-
-
+#include "imgui-master/imgui.h"
+#include "imgui-master/backends/imgui_impl_sdl.h"
+#include "imgui_sdl-master/imgui_sdl.h"
+#include "imgui-master/imgui_internal.h"
+#include "I_GUI.h"
 
 struct Transform 
 {
@@ -47,18 +50,22 @@ public :
 };
 
 
-class GameObject: public IEventHandler
+class GameObject: public IEventHandler,I_GUI
 {
 	
 	
 
 private:
 	SDL_Renderer* m_Renderer;
+
+
+protected:
+	ImGuiIO* io;
 	
 public:
 	Bitmap* m_bitmap;
 	Transform* transform;
-	GameObject(SDL_Renderer* renderer,Bitmap* bitmap, float _w, float _h, float _x, float _y, float _z = 0);
+	GameObject(SDL_Renderer* renderer,Bitmap* bitmap,ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
 	
 	GameObject();
 	~GameObject();
@@ -111,5 +118,31 @@ public:
 
 	}
 
+	bool isClickingOn()
+	{
+		SDL_Rect rect;
+		rect.x = transform->x;
+		rect.y = transform->y;
+		rect.h = m_bitmap->GetSurface()->h;
+		rect.w = m_bitmap->GetSurface()->w;
+
+		SDL_Point point;
+		point.x = io->MousePos.x;
+		point.y = io->MousePos.y;
+
+		
+		return (SDL_PointInRect(&point, &rect)&&io->MouseClicked[0]);
+	}
+
+	 void DrawGUI() override
+	{
+		ImGui::Begin("New Window");
+
+		ImGui::InputFloat("X", transform->getXAddr(), 0.1f, 1.0f, "%.3f");
+
+		ImGui::InputFloat("Y", transform->getYAddr(), 0.1f, 1.0f, "%.3f");
+
+		ImGui::End();
+	}
 
 };

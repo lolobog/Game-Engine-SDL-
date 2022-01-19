@@ -3,6 +3,7 @@
 #include "hero.h"
 #include <vector>
 
+
 using namespace std;
 
 
@@ -26,7 +27,7 @@ public:
 	Hero* Player;
 	
 
-	Scene(SDL_Renderer *renderer);
+	Scene(SDL_Renderer *renderer, ImGuiIO& io);
 
 	
 

@@ -1,7 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject(SDL_Renderer* renderer, Bitmap* bitmap, float _w, float _h, float _x, float _y, float _z )
+GameObject::GameObject(SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z )
 {
+	io = &_io;
 	m_Renderer = renderer;
 	m_bitmap = bitmap;
 
