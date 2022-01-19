@@ -5,7 +5,7 @@
 
 Game::Game()
 {
-	
+
 	m_Window = nullptr;
 	m_Renderer = nullptr;
 
@@ -44,6 +44,22 @@ Game::Game()
 		getchar();
 		return;
 	}
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	SDL_DisplayMode DisplayMode;
+	SDL_GetCurrentDisplayMode(0, &DisplayMode);
+	ImGuiSDL::Initialize(m_Renderer, DisplayMode.w, DisplayMode.h);
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplSDL2_InitForOpenGL(m_Window, SDL_GL_CreateContext(m_Window));
+
+	
 
 
 
@@ -89,16 +105,35 @@ Game::~Game()
 void Game::Update(void)
 {
 	CheckEvents();
-
-	
-	
 	SDL_RenderClear(m_Renderer);
+
+	ImGui::NewFrame();
+	ImGui_ImplSDL2_NewFrame(m_Window);
+	bool show = true;
+	
+	ImGui::ShowDemoWindow(nullptr);
+
+	ImGui::Begin("WINDOW NAME");
+
+	//.x
+	float x = 1.0f;
+
+	ImGui::InputFloat("X", scene->LayerObjects[playerEnemy][1]->getTransform()->getXAddr(), 0.1f, 1.0f, "%.3f");
+
+	ImGui::InputFloat("Y", scene->LayerObjects[playerEnemy][1]->getTransform()->getYAddr(), 0.1f, 1.0f, "%.3f");
+	
+	ImGui::End();
+
+	ImGui::Render();
+	ImGuiSDL::Render(ImGui::GetDrawData());
+	
+	
 	scene->Update();
 	
 	
 
 
-	UpdateText("Small Red", 50, 10, m_pSmallFont, { 255,0,0 });
+	/*UpdateText("Small Red", 50, 10, m_pSmallFont, { 255,0,0 });
 	UpdateText("Small Red", 50, 40, m_pSmallFont, { 0,0,255 });
 
 	char char_array[] = "Big White";
@@ -110,7 +145,7 @@ void Game::Update(void)
 	int testNumber = 1234;
 	string testString = "Test Number: ";
 	testString += to_string(testNumber);
-	UpdateText(testString, 50, 210, m_pBigFont, { 255,255,255 });
+	UpdateText(testString, 50, 210, m_pBigFont, { 255,255,255 });*/
 
 
 	SDL_RenderPresent(m_Renderer);

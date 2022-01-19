@@ -13,7 +13,7 @@ Scene::Scene(SDL_Renderer* renderer)
 	
 	LayerObjects[playerEnemy].push_back(new GameObject(renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), 20, 20, 200, 100, 10));
 
-	Player = new Hero(renderer,new Bitmap(renderer, "Assets/hero.bmp", true),20,20,100,100,100);
+	Player = new Hero(renderer,new Bitmap(renderer, "Assets/hero.bmp", true),20,20,100,200,100);
 
 	LayerObjects[playerEnemy].push_back(Player);
 }

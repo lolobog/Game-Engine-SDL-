@@ -8,6 +8,10 @@
 #include <vector>
 #include "Scene.h"
 #include "input.h"
+#include "imgui-master/imgui.h"
+#include "imgui-master/backends/imgui_impl_sdl.h"
+#include "imgui_sdl-master/imgui_sdl.h"
+#include "imgui-master/imgui_internal.h"
 
 using namespace std;
 
@@ -31,9 +35,22 @@ public:
 	void CheckEvents(void) {};
 	void UpdateText(string msg, int x, int y, TTF_Font* font, SDL_Color colour);
 
+	static Game& getInstance()
+	{
+		static Game    instance; // Guaranteed to be destroyed.
+							  // Instantiated on first use.
+		return instance;
+	}
+
 	SDL_Renderer& GetRenderer()
 	{
 		return *m_Renderer;
+	}
+	
+
+	SDL_Window& GetWindow()
+	{
+		return *m_Window;
 	}
 	
 	Scene* scene;

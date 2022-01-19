@@ -33,18 +33,19 @@ void GameObject::OnEvent(Event& event)
 
 void GameObject::setPosition(Vector2D newPos)
 {
-	transform->position = newPos;
+	transform->x = newPos.x;
+	transform->y = newPos.y;
 }
 
 void GameObject::setY(float y)
 {
-	 transform->position.y = y; 
+	 //transform->y = y; 
 	 transform->y = y;
 }
 
 void GameObject::setX(float x)
 {
-	transform->position.x = x;
+	//transform->position.x = x;
 	transform->x = x;
 }
 

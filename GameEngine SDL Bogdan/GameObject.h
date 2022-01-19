@@ -5,12 +5,23 @@
 #include "EventManager.h"
 #include <Box2D.h>
 
+
+
 struct Transform 
 {
 public :
 	float w, h, x, y, z;
 
-	Vector2D position;
+	float* getXAddr()
+	{
+		return &x;
+	}
+	float* getYAddr()
+	{
+		return &y;
+	}
+
+	//Vector2D position;
 	Vector2D velocity;
 
 	Transform() {
@@ -29,8 +40,8 @@ public :
 		this->y = y;
 		this->z = z;
 
-		this->position.x = x;
-		this->position.y = y;
+		//this->position.x = x;
+		//this->position.y = y;
 	}
 
 };
@@ -79,7 +90,8 @@ public:
 
 	Vector2D getPosition() 
 	{
-		return transform->position; 
+		//return transform->position; 
+		return Vector2D(transform->x, transform->y);
 	}
 	
 	void setPosition(Vector2D newPos);

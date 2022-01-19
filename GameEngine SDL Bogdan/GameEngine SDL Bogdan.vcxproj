@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\SDL2-2.0.16\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\SDL2-2.0.16\include;D:\Tutorial 5\GameEngine SDL Bogdan\imgui_sdl-master;D:\Tutorial 5\GameEngine SDL Bogdan\imgui-master;$(IncludePath)</IncludePath>
     <LibraryPath>..\SDL2-2.0.16\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -151,6 +151,13 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="hero.cpp" />
+    <ClCompile Include="imgui-master\backends\imgui_impl_sdl.cpp" />
+    <ClCompile Include="imgui-master\imgui.cpp" />
+    <ClCompile Include="imgui-master\imgui_demo.cpp" />
+    <ClCompile Include="imgui-master\imgui_draw.cpp" />
+    <ClCompile Include="imgui-master\imgui_tables.cpp" />
+    <ClCompile Include="imgui-master\imgui_widgets.cpp" />
+    <ClCompile Include="imgui_sdl-master\imgui_sdl.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Resource_Manager.cpp" />
@@ -165,6 +172,14 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="hero.h" />
+    <ClInclude Include="imgui-master\backends\imgui_impl_sdl.h" />
+    <ClInclude Include="imgui-master\imconfig.h" />
+    <ClInclude Include="imgui-master\imgui.h" />
+    <ClInclude Include="imgui-master\imgui_internal.h" />
+    <ClInclude Include="imgui-master\imstb_rectpack.h" />
+    <ClInclude Include="imgui-master\imstb_textedit.h" />
+    <ClInclude Include="imgui-master\imstb_truetype.h" />
+    <ClInclude Include="imgui_sdl-master\imgui_sdl.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Resource_Manager.h" />
     <ClInclude Include="Scene.h" />

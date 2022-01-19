@@ -10,6 +10,9 @@ int main(int argc, char* argv[])
 	Input* input = new Input();
 	
 	
+
+
+	
 	if (input)
 	{
 		Uint8 r = 127, g = 127, b = 127, a = 255;

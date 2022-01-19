@@ -1,5 +1,4 @@
-﻿  EventManager.cpp
-  Game.cpp
+﻿  Game.cpp
 D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
@@ -12,26 +11,4 @@ D:\Tutorial 5\GameEngine SDL Bogdan\Game.cpp(28,10): message : the missing varia
 D:\Tutorial 5\GameEngine SDL Bogdan\Game.cpp(42,10): warning C4473: 'printf' : not enough arguments passed for format string
 D:\Tutorial 5\GameEngine SDL Bogdan\Game.cpp(42,10): message : placeholders and their parameters expect 1 variadic arguments, but 0 were provided
 D:\Tutorial 5\GameEngine SDL Bogdan\Game.cpp(42,10): message : the missing variadic argument 1 is required by format string '%s'
-  GameObject.cpp
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,37): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,52): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,52): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,67): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,67): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,82): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Tutorial 5\GameEngine SDL Bogdan\GameObject.cpp(69,82): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Scene.cpp
-D:\Tutorial 5\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  creature.cpp
-  hero.cpp
-D:\Tutorial 5\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  main.cpp
-D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Tutorial 5\GameEngine SDL Bogdan\Game.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Tutorial 5\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
   GameEngine SDL Bogdan.vcxproj -> D:\Tutorial 5\Debug\GameEngine SDL Bogdan.exe
