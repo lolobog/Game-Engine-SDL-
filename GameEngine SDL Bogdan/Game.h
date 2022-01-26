@@ -12,6 +12,7 @@
 #include "imgui-master/backends/imgui_impl_sdl.h"
 #include "imgui_sdl-master/imgui_sdl.h"
 #include "imgui-master/imgui_internal.h"
+#include "FrameTimer.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ private:
 	SDL_Renderer* m_Renderer;
 	bool m_running;
 	Input PlayerInput;
+	FrameTimer m_timer;
 	
 
 

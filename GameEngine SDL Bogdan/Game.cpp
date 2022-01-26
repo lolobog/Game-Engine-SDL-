@@ -104,6 +104,12 @@ Game::~Game()
 
 void Game::Update(void)
 {
+	m_timer.NewTime = SDL_GetTicks();
+	m_timer.delta = m_timer.NewTime - m_timer.OldTime;
+
+	m_timer.Push(m_timer.delta);
+
+
 	CheckEvents();
 	SDL_RenderClear(m_Renderer);
 
@@ -111,7 +117,7 @@ void Game::Update(void)
 	ImGui_ImplSDL2_NewFrame(m_Window);
 	bool show = true;
 	scene->Update();
-	//ImGui::ShowDemoWindow(nullptr);
+	ImGui::ShowDemoWindow(nullptr);
 
 	//ImGui::Begin("WINDOW NAME");
 
@@ -123,6 +129,16 @@ void Game::Update(void)
 	////ImGui::InputFloat("Y", scene->LayerObjects[playerEnemy][1]->getTransform()->getYAddr(), 0.1f, 1.0f, "%.3f");
 	//
 	//ImGui::End();
+
+	ImGui::Begin("WINDOW NAME");
+
+	ImGui::PlotLines("Frames", m_timer.FrameTimeQueue.data(), m_timer.capacity);
+
+	char buffer[64];
+	snprintf(buffer, sizeof(buffer), "Average Frame Time %f ms", m_timer.AverageTime());
+	ImGui::Text(buffer);
+
+	ImGui::End();
 
 	ImGui::Render();
 	ImGuiSDL::Render(ImGui::GetDrawData());
@@ -150,7 +166,9 @@ void Game::Update(void)
 
 	SDL_RenderPresent(m_Renderer);
 
+
 	SDL_Delay(16);
+	m_timer.OldTime = m_timer.NewTime;
 }
 
 void Game::UpdateText(string msg, int x, int y, TTF_Font* font, SDL_Color colour)

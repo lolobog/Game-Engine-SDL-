@@ -3,14 +3,16 @@
 
 
 
-
 int main(int argc, char* argv[])
 {
 	Game* game = new Game();
 	Input* input = new Input();
 	
 	
+	
 
+
+	
 
 	
 	if (input)
