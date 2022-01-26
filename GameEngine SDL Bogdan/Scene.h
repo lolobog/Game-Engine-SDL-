@@ -21,6 +21,7 @@ class Scene
 {
 private:
 		SDL_Renderer* m_rednerere;
+		ImGuiIO* io = nullptr;
 public:
 	//vector <GameObject> SceneObjects;
 	vector <vector <GameObject*>> LayerObjects;

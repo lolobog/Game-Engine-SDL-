@@ -22,6 +22,7 @@ Bitmap::Bitmap(SDL_Renderer* renderer, std::string fileName, bool useTransparenc
 	m_pbitmapTexture=data->tex;
 	m_pbitmapSurface = data->surf;
 	m_pRenderer = renderer;
+	Name = fileName;
 	
 };
 

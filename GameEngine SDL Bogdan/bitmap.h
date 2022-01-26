@@ -15,7 +15,7 @@ private:
 	SDL_Texture* m_pbitmapTexture;
 	SDL_Surface* m_pbitmapSurface;
 	SDL_Renderer* m_pRenderer;
-
+	std::string  Name;
 	
 
 public:
@@ -29,7 +29,7 @@ public:
 	
 	
 	
-
+	 std::string GetFileName() { return Name; }
 	SDL_Texture* GetTexture() { return m_pbitmapTexture; }
 	SDL_Surface* GetSurface() { return m_pbitmapSurface; }
 	SDL_Renderer* GetRenderer() { return m_pRenderer; }

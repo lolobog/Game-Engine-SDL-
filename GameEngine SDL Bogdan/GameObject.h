@@ -50,7 +50,7 @@ public :
 };
 
 
-class GameObject: public IEventHandler,I_GUI
+class GameObject: public IEventHandler, public I_GUI
 {
 	
 	
@@ -65,7 +65,8 @@ protected:
 public:
 	Bitmap* m_bitmap;
 	Transform* transform;
-	GameObject(SDL_Renderer* renderer,Bitmap* bitmap,ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
+	std::string objectName;
+	GameObject(std::string _objectName,SDL_Renderer* renderer,Bitmap* bitmap,ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
 	
 	GameObject();
 	~GameObject();
@@ -136,7 +137,7 @@ public:
 
 	 void DrawGUI() override
 	{
-		ImGui::Begin("New Window");
+		ImGui::Begin(objectName.c_str());
 
 		ImGui::InputFloat("X", transform->getXAddr(), 0.1f, 1.0f, "%.3f");
 
@@ -144,5 +145,15 @@ public:
 
 		ImGui::End();
 	}
+	
+	 void MouseHeld(ImGuiIO& io) override
+	 {
+		 if (I_GUI::ObjectTargeted==this)
+		 {
+			 transform->x += io.MouseDelta.x;
+			 transform->y += io.MouseDelta.y;
+
+		 }
+	 }
 
 };

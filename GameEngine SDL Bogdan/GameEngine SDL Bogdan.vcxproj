@@ -159,6 +159,7 @@
     <ClCompile Include="imgui-master\imgui_widgets.cpp" />
     <ClCompile Include="imgui_sdl-master\imgui_sdl.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="I_GUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Resource_Manager.cpp" />
     <ClCompile Include="Scene.cpp" />
