@@ -31,7 +31,8 @@ BitmapData* ResourceManager::Load(const std::string fileName, bool useTransparan
 
 		SDL_Renderer* m_pRenderer = renderer;
 
-		SDL_Surface* m_pbitmapSurface = SDL_LoadBMP(fileName.c_str());
+		//SDL_Surface* m_pbitmapSurface = SDL_LoadBMP(fileName.c_str());
+		SDL_Surface* m_pbitmapSurface = IMG_Load(fileName.c_str());
 
 		SDL_Texture* m_pbitmapTexture=nullptr;
 
@@ -44,6 +45,7 @@ BitmapData* ResourceManager::Load(const std::string fileName, bool useTransparan
 		}
 		else
 		{
+			
 			if (!m_pbitmapSurface)
 			{
 				printf("SURFACE for bitmap '%s' not loaded! \n ");

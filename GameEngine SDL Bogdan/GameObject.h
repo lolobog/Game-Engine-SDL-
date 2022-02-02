@@ -67,8 +67,11 @@ public:
 	Transform* transform;
 	std::string objectName;
 	GameObject(std::string _objectName,SDL_Renderer* renderer,Bitmap* bitmap,ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
+
+	GameObject(std::string _objectName, SDL_Renderer* renderer,  ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
 	
 	GameObject();
+
 	~GameObject();
 	
 	virtual void OnEvent(Event& event);

@@ -14,6 +14,7 @@
 #include "imgui-master/imgui_internal.h"
 #include "FrameTimer.h"
 #include <iostream>
+#include <SDL_image.h>
 
 using namespace std;
 
@@ -27,6 +28,8 @@ private:
 	Input PlayerInput;
 	FrameTimer m_timer;
 	int count = 0;
+	vector<Bitmap*> content;
+	int numberOfImages = 0;
 	
 
 public:

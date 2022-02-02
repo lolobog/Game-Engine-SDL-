@@ -46,6 +46,15 @@ Game::Game()
 		return;
 	}
 
+
+	//Initialize PNG loading
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+	{
+		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+		//success = false;
+	}
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	SDL_DisplayMode DisplayMode;
@@ -121,15 +130,26 @@ void Game::Update(void)
 	bool show = true;
 	scene->Update();
 	//ImGui::ShowDemoWindow(nullptr);
-	
-		vector<Bitmap*> content;
-		std::string path = "../GameEngine SDL Bogdan/assets";
-		for (const auto& entry : std::filesystem::directory_iterator(path)) //directory_iterator(path) //recursive_
+	count++;
+	if(count%120==0)
+	{ 
+		std::string AssetPath = "../GameEngine SDL Bogdan/assets";
+		for (const auto& entry : std::filesystem::directory_iterator(AssetPath)) //directory_iterator(path) //recursive_
 		{
 			if (entry.path().extension() == ".bmp" || entry.path().extension() == ".jpg" || entry.path().extension() == ".png")
 			{
-				Bitmap* Asset = new Bitmap(m_Renderer, entry.path().string(), true);
-				content.push_back(Asset);
+				bool isInVector = false;
+				for (auto bitmap : content)
+				{
+					if (bitmap->GetFileName() == entry.path().string())
+						isInVector = true;
+				}
+				if (isInVector == false)
+				{
+					Bitmap* Asset = new Bitmap(m_Renderer, entry.path().string(), true);
+					content.push_back(Asset);
+					numberOfImages++;
+				}
 
 			}
 			else if (entry.is_directory())
@@ -139,6 +159,8 @@ void Game::Update(void)
 			//debug
 			std::cout << entry.path() << std::endl;
 		}
+
+	}
 
 
 	ImGui::Begin("Content Window");
@@ -159,7 +181,10 @@ void Game::Update(void)
 			ImGui::EndDragDropSource();
 		}*/
 		ImGui::PopID();
-		ImGui::SameLine();
+		if(i%4!=3)
+			ImGui::SameLine();
+
+		
 	}
 
 	//ImGui::EndTabItem();
