@@ -30,6 +30,10 @@ public:
 
 	Scene(SDL_Renderer *renderer, ImGuiIO& io);
 
+	vector<vector<GameObject*>> GetGameObjects()
+	{
+		return LayerObjects;
+	}
 	
 
 

@@ -13,6 +13,7 @@
 #include "imgui_sdl-master/imgui_sdl.h"
 #include "imgui-master/imgui_internal.h"
 #include "FrameTimer.h"
+#include <iostream>
 
 using namespace std;
 
@@ -25,8 +26,8 @@ private:
 	bool m_running;
 	Input PlayerInput;
 	FrameTimer m_timer;
+	int count = 0;
 	
-
 
 public:
 	Game();

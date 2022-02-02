@@ -70,7 +70,7 @@ public:
 	
 	GameObject();
 	~GameObject();
-
+	
 	virtual void OnEvent(Event& event);
 
 	//Hierarchy

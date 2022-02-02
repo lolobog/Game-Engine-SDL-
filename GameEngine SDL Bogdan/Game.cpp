@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include "Game.h"
+#include <filesystem>
 
 
 
@@ -70,12 +71,14 @@ Game::Game()
 
 
 	scene = new Scene(m_Renderer,io);
-
+	
+	
 
 }///
 
 void Game::SetDisplayColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 	{
+	
 
 		if (m_Renderer)
 		{
@@ -117,32 +120,74 @@ void Game::Update(void)
 	ImGui_ImplSDL2_NewFrame(m_Window);
 	bool show = true;
 	scene->Update();
-	ImGui::ShowDemoWindow(nullptr);
+	//ImGui::ShowDemoWindow(nullptr);
+	
+		vector<Bitmap*> content;
+		std::string path = "../GameEngine SDL Bogdan/assets";
+		for (const auto& entry : std::filesystem::directory_iterator(path)) //directory_iterator(path) //recursive_
+		{
+			if (entry.path().extension() == ".bmp" || entry.path().extension() == ".jpg" || entry.path().extension() == ".png")
+			{
+				Bitmap* Asset = new Bitmap(m_Renderer, entry.path().string(), true);
+				content.push_back(Asset);
 
-	//ImGui::Begin("WINDOW NAME");
+			}
+			else if (entry.is_directory())
+			{
+				std::cout << "dir " << entry << std::endl;
+			}
+			//debug
+			std::cout << entry.path() << std::endl;
+		}
 
-	////.x
-	//float x = 1.0f;
 
-	////ImGui::InputFloat("X", scene->LayerObjects[playerEnemy][1]->getTransform()->getXAddr(), 0.1f, 1.0f, "%.3f");
+	ImGui::Begin("Content Window");
+	//ImGui::BeginTable("Content browser", 3);
+	;
+	for (int i = 0; i < content.size(); i++)
+	{
+		ImGui::PushID(i);
 
-	////ImGui::InputFloat("Y", scene->LayerObjects[playerEnemy][1]->getTransform()->getYAddr(), 0.1f, 1.0f, "%.3f");
-	//
-	//ImGui::End();
+		ImGui::ImageButton((ImTextureID)content[i]->GetTexture(), { 100,100 });
 
-	ImGui::Begin("WINDOW NAME");
+
+		//for dragging
+		/*if (ImGui::BeginDragDropSource())
+		{
+			AssetMousDrag = content[i];
+			ImGui::Image((ImTextureID)content[i]->GetTextureRef(), { 100,100 });
+			ImGui::EndDragDropSource();
+		}*/
+		ImGui::PopID();
+		ImGui::SameLine();
+	}
+
+	//ImGui::EndTabItem();
+
+
+	ImGui::End();
+
+	
+	//Profiler Window
+	ImGui::Begin("Profiler");
 
 	ImGui::PlotLines("Frames", m_timer.FrameTimeQueue.data(), m_timer.capacity);
-
 	char buffer[64];
 	snprintf(buffer, sizeof(buffer), "Average Frame Time %f ms", m_timer.AverageTime());
 	ImGui::Text(buffer);
 
 	ImGui::End();
 
+	//Content window
+
+
+	
+	
+
+
+
 	ImGui::Render();
 	ImGuiSDL::Render(ImGui::GetDrawData());
-	
 	
 
 	
