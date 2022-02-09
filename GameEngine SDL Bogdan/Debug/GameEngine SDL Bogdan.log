@@ -1,1 +1,3 @@
-﻿  GameEngine SDL Bogdan.vcxproj -> D:\Tutorial 5\Debug\GameEngine SDL Bogdan.exe
+﻿  Profiler.cpp
+D:\Tutorial 5\GameEngine SDL Bogdan\Profiler.h(47,11): warning C4101: 'li': unreferenced local variable
+  GameEngine SDL Bogdan.vcxproj -> D:\Tutorial 5\Debug\GameEngine SDL Bogdan.exe

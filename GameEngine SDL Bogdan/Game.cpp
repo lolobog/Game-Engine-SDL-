@@ -175,12 +175,13 @@ void Game::Update(void)
 		for (auto object : Root->children)
 		{
 			if(object->parent->objectName=="Root")
-				if(ImGui::TreeNodeEx(object->objectName.c_str(),nodeFlags))
+				//if(ImGui::TreeNodeEx(object->objectName.c_str(),nodeFlags))
 					object->DrawChildGUI();
 		}
+		ImGui::TreePop();//poping root
 	}
 
-	ImGui::TreePop();
+	
 	
 	ImGui::End();
 
