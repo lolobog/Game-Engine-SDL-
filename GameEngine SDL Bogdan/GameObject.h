@@ -162,15 +162,20 @@ public:
 
 	 void DrawChildGUI()
 	 {
-		 bool isOpen = ImGui::TreeNodeEx("name", 0);
-		 if (isOpen)
-		 {
+		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
+		 
 			for(GameObject* child : children)
 			{
+				bool isOpen = ImGui::TreeNodeEx(child->objectName.c_str(), nodeFlags);
+				if (isOpen)
+				{ }
 				 child->DrawChildGUI(); 
-			 }
-		 }
-		 ImGui::TreePop();
+				 
+			}
+			ImGui::TreePop();
+		 
+		
+		
 	 }
 
 };

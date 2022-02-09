@@ -44,7 +44,7 @@ public:
 	void Update(void) ;
 	void CheckEvents(void) {};
 	void UpdateText(string msg, int x, int y, TTF_Font* font, SDL_Color colour);
-	void GoOverChildren(GameObject* obj);
+	
 
 	static Game& getInstance()
 	{

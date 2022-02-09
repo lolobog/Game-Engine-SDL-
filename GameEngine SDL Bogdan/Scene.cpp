@@ -10,32 +10,31 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	//2 player / enemy
 	//3 hud
 
-	LayerObjects.resize(4);
+	//LayerObjects.resize(4);
 	
 	
 
 	Root=	new GameObject("Root", renderer, _io, 0, 0, 0, 0, 0);
-	LayerObjects[background].push_back(Root);
+	SceneObjects.push_back(Root);
 	
-	LayerObjects[playerEnemy].push_back(new GameObject("Monster1", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 30, 30, 200, 100, 10));
-	Root->AddChild(LayerObjects[playerEnemy][0]);
+	SceneObjects.push_back(new GameObject("Monster1", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 30, 30, 200, 100, 10));
+	Root->AddChild(SceneObjects[1]);
 
-	LayerObjects[playerEnemy].push_back(new GameObject("Monster2", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 50, 50, 200, 100, 10));
-	
+	SceneObjects.push_back(new GameObject("Monster2", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 50, 50, 200, 100, 10));
+	Root->AddChild(SceneObjects[2]);
 
 	Player = new Hero(renderer, new Bitmap(renderer, "Assets/hero.bmp", true), _io, 100, 100, 100, 200, 100);
 	Root->AddChild(Player);
-	LayerObjects[playerEnemy].push_back(Player);
+	SceneObjects.push_back(Player);
 
-	Player->AddChild(LayerObjects[playerEnemy][1]);
+	Player->AddChild(SceneObjects[1]);
 }
 
 void Scene::Update()
 {
 	
-	for (auto Layer : LayerObjects)
-	{	
-		for (auto object : Layer)
+	
+		for (auto object : SceneObjects)
 		{
 			if (object->objectName != "Root")
 			{
@@ -45,7 +44,7 @@ void Scene::Update()
 			
 			
 		}
-	}
+	
 
 	if (I_GUI::EditorToShow)
 		I_GUI::EditorToShow->DrawGUI();

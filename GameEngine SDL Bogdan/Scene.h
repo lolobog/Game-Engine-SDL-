@@ -24,17 +24,21 @@ private:
 		ImGuiIO* io = nullptr;
 		GameObject* Root;
 public:
-	//vector <GameObject> SceneObjects;
-	vector <vector <GameObject*>> LayerObjects;
+	vector <GameObject*> SceneObjects;
+	//vector <vector <GameObject*>> LayerObjects;
 	Hero* Player;
 	
 
+	GameObject* GetRoot()
+	{
+		return Root;
+	}
 	Scene(SDL_Renderer *renderer, ImGuiIO& io);
 
-	vector<vector<GameObject*>> GetGameObjects()
-	{
-		return LayerObjects;
-	}
+	//vector<vector<GameObject*>> GetGameObjects()
+	//{
+	//	return LayerObjects;
+	//}
 	
 
 

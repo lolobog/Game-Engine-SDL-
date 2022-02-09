@@ -113,24 +113,7 @@ Game::~Game()
 	TTF_CloseFont(m_pSmallFont);
 	
 }
-void Game::GoOverChildren(GameObject* obj)
-{
-	if (obj->children.size() > 0)
-	{
-		for (auto tempObj : obj->children)
-		{
-			if (tempObj->visited == false)
-			{
-				if (ImGui::TreeNode(tempObj->objectName.c_str()))
-				{ 
-				
-				}
 
-				tempObj->visited = true;
-			}
-		}
-	}
-}
 void Game::Update(void)
 {
 	m_timer.NewTime = SDL_GetTicks();
@@ -184,39 +167,21 @@ void Game::Update(void)
 	ImGui::SetWindowSize({ 150,screenHeight - menuHeight });
 	
 	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
+	GameObject* Root = scene->GetRoot();
+	bool isNodeOpen = ImGui::TreeNodeEx(Root->objectName.c_str(), nodeFlags);
 
-	
-
-	
-	
-
-
-		for (auto layer : scene->LayerObjects)
+	if (isNodeOpen)
+	{
+		for (auto object : Root->children)
 		{
-			for (auto object : layer)
-			{
-				if (object->parent == nullptr)
-				{
-					if (ImGui::TreeNode(object->objectName.c_str()))
-					{
-						while (object->children.size() > 0)
-						{
-							
-						}
-						
-					}
-				}
-			}
-
+			if(object->parent->objectName=="Root")
+				if(ImGui::TreeNodeEx(object->objectName.c_str(),nodeFlags))
+					object->DrawChildGUI();
 		}
+	}
 
-
+	ImGui::TreePop();
 	
-
-
-
-
-
 	ImGui::End();
 
 
