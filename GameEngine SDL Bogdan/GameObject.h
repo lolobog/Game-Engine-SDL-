@@ -43,8 +43,7 @@ public :
 		this->y = y;
 		this->z = z;
 
-		//this->position.x = x;
-		//this->position.y = y;
+		
 	}
 
 };
@@ -57,7 +56,7 @@ class GameObject: public IEventHandler, public I_GUI
 
 private:
 	SDL_Renderer* m_Renderer;
-
+	
 
 protected:
 	ImGuiIO* io;
@@ -79,6 +78,7 @@ public:
 	//Hierarchy
 	GameObject* parent = nullptr;
 	std::vector <GameObject*> children;
+	bool visited = false;
 
 	void SetParent(GameObject* obj) { this->parent = obj; }
 	void AddChild(GameObject* obj) 
@@ -157,6 +157,20 @@ public:
 			 transform->y += io.MouseDelta.y;
 
 		 }
+	 }
+
+
+	 void DrawChildGUI()
+	 {
+		 bool isOpen = ImGui::TreeNodeEx("name", 0);
+		 if (isOpen)
+		 {
+			for(GameObject* child : children)
+			{
+				 child->DrawChildGUI(); 
+			 }
+		 }
+		 ImGui::TreePop();
 	 }
 
 };

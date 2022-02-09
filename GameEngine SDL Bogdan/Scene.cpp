@@ -21,12 +21,13 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	Root->AddChild(LayerObjects[playerEnemy][0]);
 
 	LayerObjects[playerEnemy].push_back(new GameObject("Monster2", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 50, 50, 200, 100, 10));
-	Root->AddChild(LayerObjects[playerEnemy][1]);
+	
+
 	Player = new Hero(renderer, new Bitmap(renderer, "Assets/hero.bmp", true), _io, 100, 100, 100, 200, 100);
 	Root->AddChild(Player);
 	LayerObjects[playerEnemy].push_back(Player);
 
-	//Player->AddChild(LayerObjects[playerEnemy][1]);
+	Player->AddChild(LayerObjects[playerEnemy][1]);
 }
 
 void Scene::Update()

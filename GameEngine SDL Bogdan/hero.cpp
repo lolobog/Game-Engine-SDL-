@@ -4,7 +4,7 @@ Hero::Hero(SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io, float _w, float
 	io =& _io;
 	m_bitmap = bitmap;
 	transform = new Transform(_w, _h, _x, _y, _z);
-
+	objectName = "Hero";
 	
 };
 

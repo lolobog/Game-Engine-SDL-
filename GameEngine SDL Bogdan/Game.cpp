@@ -17,8 +17,8 @@ Game::Game()
 		"My First Window", //title
 		250, //initial x
 		50,  //initial y
-		640,  //width
-		480, //height
+		screenWidth,  //width
+		screenHeight, //height
 		0  //window behaviour flags
 
 
@@ -113,7 +113,24 @@ Game::~Game()
 	TTF_CloseFont(m_pSmallFont);
 	
 }
+void Game::GoOverChildren(GameObject* obj)
+{
+	if (obj->children.size() > 0)
+	{
+		for (auto tempObj : obj->children)
+		{
+			if (tempObj->visited == false)
+			{
+				if (ImGui::TreeNode(tempObj->objectName.c_str()))
+				{ 
+				
+				}
 
+				tempObj->visited = true;
+			}
+		}
+	}
+}
 void Game::Update(void)
 {
 	m_timer.NewTime = SDL_GetTicks();
@@ -162,9 +179,48 @@ void Game::Update(void)
 
 	}
 
+	ImGui::Begin("GameObjects", 0, ImGuiWindowFlags_NoMove);
+	ImGui::SetWindowPos({ 0,menuHeight });
+	ImGui::SetWindowSize({ 150,screenHeight - menuHeight });
+	
+	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
+
+	
+
+	
+	
+
+
+		for (auto layer : scene->LayerObjects)
+		{
+			for (auto object : layer)
+			{
+				if (object->parent == nullptr)
+				{
+					if (ImGui::TreeNode(object->objectName.c_str()))
+					{
+						while (object->children.size() > 0)
+						{
+							
+						}
+						
+					}
+				}
+			}
+
+		}
+
+
+	
+
+
+
+
+
+	ImGui::End();
+
 
 	ImGui::Begin("Content Window");
-	//ImGui::BeginTable("Content browser", 3);
 	;
 	for (int i = 0; i < content.size(); i++)
 	{
@@ -203,7 +259,7 @@ void Game::Update(void)
 
 	ImGui::End();
 
-	//Content window
+	
 
 
 	
@@ -280,6 +336,8 @@ void Game::UpdateText(string msg, int x, int y, TTF_Font* font, SDL_Color colour
 		SDL_FreeSurface(surface);
 		
 }
+
+
 
 
 

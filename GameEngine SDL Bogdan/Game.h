@@ -30,6 +30,10 @@ private:
 	int count = 0;
 	vector<Bitmap*> content;
 	int numberOfImages = 0;
+	float screenHeight = 480;
+	float screenWidth = 640;
+	float menuHeight = 20;
+	
 	
 
 public:
@@ -40,6 +44,7 @@ public:
 	void Update(void) ;
 	void CheckEvents(void) {};
 	void UpdateText(string msg, int x, int y, TTF_Font* font, SDL_Color colour);
+	void GoOverChildren(GameObject* obj);
 
 	static Game& getInstance()
 	{
