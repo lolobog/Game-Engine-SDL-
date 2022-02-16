@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
 
 		while (!input->KeyIsPressed(KEY_ESCAPE))
 		{
+			
 			input->Update();
 			if (input->KeyIsPressed(KEY_W))
 				game->scene->Player->setY(game->scene->Player->getPosition().y - 10);

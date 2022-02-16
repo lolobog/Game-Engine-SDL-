@@ -15,6 +15,7 @@
 #include "FrameTimer.h"
 #include <iostream>
 #include <SDL_image.h>
+#include "Profiler.h"
 
 using namespace std;
 
@@ -30,8 +31,8 @@ private:
 	int count = 0;
 	vector<Bitmap*> content;
 	int numberOfImages = 0;
-	float screenHeight = 480;
-	float screenWidth = 640;
+	float screenHeight = 720;
+	float screenWidth = 960;
 	float menuHeight = 20;
 	Bitmap* AssetMouseDrag;
 	

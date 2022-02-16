@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 #include <ctime>
+#include <string>
+#include <stack>
 
 using namespace std;
 
@@ -10,6 +12,16 @@ struct SampleData
 {
 	__int64 functionTime;
 	int frameReference;
+};
+
+class Sample
+{
+public:
+	string Name;
+	vector<Sample*>SubSample;
+	__int64 functionTime;
+	int frameReference;
+
 };
 
 
@@ -24,30 +36,45 @@ public:
 	~ProfilerSystem();
 
 	void startFrame();
-	void storeSample(const char* name, __int64 elapsedTime);
+	void storeSampleTime(__int64 elapsedTime);
+	void storeSampleName(const char* name);
 	void endFrame();
 
 private:
-	int currentFrame;
-	FrameMap frameData;
+	int currentFrame = 0;;
+	//FrameMap frameData;
+	vector <Sample*> frameData;
+	std::stack<Sample*> CurrentSample;
+	Sample* sample = new Sample();
+
+	
 };
 
-extern ProfilerSystem g_profileManager;
+static  ProfilerSystem g_profileManager;
 
 
 struct Profile
 {
 	const char* _name;
-	__int64 startTime;
-
-
+	std::clock_t startTime;
+	std::clock_t endTime;
+	
 	Profile(const char* name)
 	{
 		_name = name;
-		__int64 li;
-		std::clock();
-
+		startTime = std::clock();
+		
+		g_profileManager.storeSampleName(name);
 
 	}
+	~Profile()
+	{
+		endTime = std::clock();
+		__int64 elapsedTime = 1000 * (endTime - startTime) / CLOCKS_PER_SEC; //Elapsed time in milliseconds
+		g_profileManager.storeSampleTime(elapsedTime);
+		
+	}
 };
+#define PROFILE(name)Profile p(name)
+
 
