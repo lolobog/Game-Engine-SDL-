@@ -17,17 +17,20 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	Root=	new GameObject("Root", renderer, _io, 0, 0, 0, 0, 0);
 	SceneObjects.push_back(Root);
 	
-	SceneObjects.push_back(new GameObject("Monster1", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 30, 30, 200, 100, 10));
-	Root->AddChild(SceneObjects[1]);
+	SceneObjects.push_back(new GameObject("Monster1", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 30, 30, 200, 100, 0));
+	SceneObjects[1]->SetParent(Root);
+	//Root->AddChild(SceneObjects[1]);
 
-	SceneObjects.push_back(new GameObject("Monster2", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 50, 50, 200, 100, 10));
+	SceneObjects.push_back(new GameObject("Monster2", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 50, 50, 200, 100, 0));
 	Root->AddChild(SceneObjects[2]);
 
-	Player = new Hero(renderer, new Bitmap(renderer, "Assets/hero.bmp", true), _io, 100, 100, 100, 200, 100);
+	Player = new Hero(renderer, new Bitmap(renderer, "Assets/hero.bmp", true), _io, 100, 100, 100, 200, 0);
 	Root->AddChild(Player);
 	SceneObjects.push_back(Player);
 
 	Player->AddChild(SceneObjects[1]);
+
+	
 }
 
 void Scene::Update()

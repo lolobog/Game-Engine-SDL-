@@ -33,6 +33,7 @@ private:
 	float screenHeight = 480;
 	float screenWidth = 640;
 	float menuHeight = 20;
+	Bitmap* AssetMouseDrag;
 	
 	
 

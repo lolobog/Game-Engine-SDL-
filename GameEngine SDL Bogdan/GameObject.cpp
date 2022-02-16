@@ -11,6 +11,26 @@ GameObject::GameObject(std::string _objectName,SDL_Renderer* renderer, Bitmap* b
 
 }
 
+//GameObject::GameObject(std::string _objectName, SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io, float _x, float _y, float _z = 0)
+//{
+//	io = &_io;
+//	m_Renderer = renderer;
+//	m_bitmap = bitmap;
+//
+//	transform = new Transform(100, 100, _x, _y, _z);
+//	objectName = _objectName;
+//}
+//
+//GameObject::GameObject(std::string _objectName, SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io)
+//{
+//	io = &_io;
+//	m_Renderer = renderer;
+//	m_bitmap = bitmap;
+//
+//	transform = new Transform(100, 100, 0, 0, 0);
+//	objectName = _objectName;
+//}
+
 
 
 

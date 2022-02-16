@@ -141,7 +141,7 @@ void Game::Update(void)
 				bool isInVector = false;
 				for (auto bitmap : content)
 				{
-					if (bitmap->GetFileName() == entry.path().string())
+					if (bitmap->GetFilePath() == entry.path().string())
 						isInVector = true;
 				}
 				if (isInVector == false)
@@ -169,6 +169,17 @@ void Game::Update(void)
 	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
 	GameObject* Root = scene->GetRoot();
 	bool isNodeOpen = ImGui::TreeNodeEx(Root->objectName.c_str(), nodeFlags);
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
+		{
+			GameObject* PayloadAsGameObject = static_cast<GameObject*>(I_GUI::EditorToShow);
+			std::cout << PayloadAsGameObject->objectName << " on top of " << Root->objectName << std::endl;
+
+			PayloadAsGameObject->SetParent(Root);
+		}
+		ImGui::EndDragDropTarget();
+	}
 
 	if (isNodeOpen)
 	{
@@ -185,9 +196,23 @@ void Game::Update(void)
 	
 	ImGui::End();
 
+	if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && AssetMouseDrag != nullptr)
+	{
+		cout << "It is working?!" << endl;
+		int x, y;
+		SDL_GetMouseState(&x, &y);
+		
+		
+
+		GameObject* obj = new GameObject(AssetMouseDrag->GetFileName(), m_Renderer, AssetMouseDrag, *scene->io,100,100, x, y, 0);
+		scene->SceneObjects.push_back(obj);
+		scene->GetRoot()->AddChild(obj);
+
+		AssetMouseDrag = nullptr;
+	}
 
 	ImGui::Begin("Content Window");
-	;
+	
 	for (int i = 0; i < content.size(); i++)
 	{
 		ImGui::PushID(i);
@@ -195,13 +220,13 @@ void Game::Update(void)
 		ImGui::ImageButton((ImTextureID)content[i]->GetTexture(), { 100,100 });
 
 
-		//for dragging
-		/*if (ImGui::BeginDragDropSource())
+		
+		if (ImGui::BeginDragDropSource())
 		{
-			AssetMousDrag = content[i];
-			ImGui::Image((ImTextureID)content[i]->GetTextureRef(), { 100,100 });
+			AssetMouseDrag = content[i];
+			ImGui::Image((ImTextureID)content[i]->GetTexture(), { 100,100 });
 			ImGui::EndDragDropSource();
-		}*/
+		}
 		ImGui::PopID();
 		if(i%4!=3)
 			ImGui::SameLine();
@@ -209,10 +234,9 @@ void Game::Update(void)
 		
 	}
 
-	//ImGui::EndTabItem();
-
-
 	ImGui::End();
+
+
 
 	
 	//Profiler Window

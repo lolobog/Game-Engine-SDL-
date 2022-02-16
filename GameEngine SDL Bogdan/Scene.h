@@ -21,12 +21,13 @@ class Scene
 {
 private:
 		SDL_Renderer* m_rednerere;
-		ImGuiIO* io = nullptr;
+		
 		GameObject* Root;
 public:
 	vector <GameObject*> SceneObjects;
 	//vector <vector <GameObject*>> LayerObjects;
 	Hero* Player;
+	ImGuiIO* io = nullptr;
 	
 
 	GameObject* GetRoot()

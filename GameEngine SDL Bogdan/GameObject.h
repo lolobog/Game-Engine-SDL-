@@ -9,6 +9,7 @@
 #include "imgui_sdl-master/imgui_sdl.h"
 #include "imgui-master/imgui_internal.h"
 #include "I_GUI.h"
+#include <iostream>
 
 struct Transform 
 {
@@ -67,6 +68,10 @@ public:
 	std::string objectName;
 	GameObject(std::string _objectName,SDL_Renderer* renderer,Bitmap* bitmap,ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
 
+	//GameObject(std::string _objectName, SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io, float _x, float _y, float _z = 0);
+
+	//GameObject(std::string _objectName, SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io);
+
 	GameObject(std::string _objectName, SDL_Renderer* renderer,  ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
 	
 	GameObject();
@@ -80,11 +85,37 @@ public:
 	std::vector <GameObject*> children;
 	bool visited = false;
 
-	void SetParent(GameObject* obj) { this->parent = obj; }
+	void RemoveChild(GameObject* obj)
+	{
+		if (obj->parent != nullptr)
+		{
+			for (int i = 0; i < obj->parent->children.size(); i++)
+			{
+				if (obj->parent->children[i] == obj)
+				{
+					obj->parent->children.erase(obj->parent->children.begin() + i);
+				}
+			}
+		}
+	}
+
+
+	void SetParent(GameObject* obj) 
+	{ 
+		RemoveChild(this);
+
+		
+		this->parent = obj;
+		obj->children.push_back(this);
+	}
 	void AddChild(GameObject* obj) 
 	{ 
+		RemoveChild(obj);
+
+
 		children.push_back(obj); 
-		obj->SetParent(this);
+		obj->parent = this;
+		
 	};
 
 	
@@ -162,8 +193,41 @@ public:
 
 	 void DrawChildGUI()
 	 {
+		 
 		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
 		bool isOpen = ImGui::TreeNodeEx(this->objectName.c_str(), nodeFlags);
+
+		if (ImGui::IsItemClicked())
+		{
+			I_GUI::EditorToShow = this;
+			std::cout << "selected object is: "<<static_cast<GameObject*>(I_GUI::EditorToShow)->objectName << std::endl;
+		}
+		if (I_GUI::EditorToShow == this && ImGui::BeginDragDropSource())
+		{
+			ImGui::SetDragDropPayload("_TREENODE", this, sizeof(GameObject*));
+			ImGui::Text("This is a drag and drop source");
+			ImGui::EndDragDropSource();
+		}
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
+			{
+				GameObject* PayloadAsGameObject = static_cast<GameObject*>(I_GUI::EditorToShow);
+				std::cout << PayloadAsGameObject->objectName << " on top of " << this->objectName << std::endl;
+
+				PayloadAsGameObject->SetParent(this);
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+
+
+
+
+
+
+
+		
 		if (isOpen)
 		{
 
