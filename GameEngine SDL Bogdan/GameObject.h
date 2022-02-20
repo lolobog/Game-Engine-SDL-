@@ -63,6 +63,7 @@ protected:
 	ImGuiIO* io;
 	
 public:
+	std::vector<std::string> Tags;
 	Bitmap* m_bitmap;
 	Transform* transform;
 	std::string objectName;
