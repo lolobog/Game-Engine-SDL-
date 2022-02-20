@@ -1,7 +1,7 @@
 #pragma once
 #include "bitmap.h"
 #include <map>
-#include <SDL_image.h>
+#include "../SDL2_image-2.0.5/include/SDL_image.h"
 
 struct BitmapData
 {

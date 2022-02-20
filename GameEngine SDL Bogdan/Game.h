@@ -14,7 +14,7 @@
 #include "imgui-master/imgui_internal.h"
 #include "FrameTimer.h"
 #include <iostream>
-#include <SDL_image.h>
+#include "../SDL2_image-2.0.5/include/SDL_image.h"
 #include "Profiler.h"
 
 using namespace std;

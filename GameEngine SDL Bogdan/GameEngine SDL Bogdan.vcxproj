@@ -98,6 +98,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Tutorial-5\SDL2_image-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -179,7 +180,9 @@
     <ClInclude Include="hero.h" />
     <ClInclude Include="imgui-master\backends\imgui_impl_sdl.h" />
     <ClInclude Include="imgui-master\imconfig.h" />
-    <ClInclude Include="imgui-master\imgui.h" />
+    <ClInclude Include="imgui-master\imgui.h">
+      <DeploymentContent>true</DeploymentContent>
+    </ClInclude>
     <ClInclude Include="imgui-master\imgui_internal.h" />
     <ClInclude Include="imgui-master\imstb_rectpack.h" />
     <ClInclude Include="imgui-master\imstb_textedit.h" />

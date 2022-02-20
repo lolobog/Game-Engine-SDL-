@@ -17,28 +17,34 @@ void ProfilerSystem::startFrame()
 
 void ProfilerSystem::endFrame()
 {
-
+	isMainLoopIn = false;
 }
 
 void ProfilerSystem::storeSampleName(const char* name)
 {
-	
+	Sample* sample = new Sample();
 	sample->Name = name;
 
-	if (frameData.size() > 0)
-		frameData[0]->SubSample.push_back(sample);
+	if (isMainLoopIn==true)
+		CurrentSample.top()->SubSample.push_back(sample);
 	else
+	{
 		frameData.push_back(sample);
+		isMainLoopIn = true;
+	}
 
 	CurrentSample.push(sample);
 }
 
 void ProfilerSystem::storeSampleTime(__int64 elapsedTime)
 {
+	Sample* sample = CurrentSample.top();
+
 	
-	sample->frameReference = currentFrame;
 	sample->functionTime = elapsedTime;
 	
+	
+	CurrentSample.pop();
 
 
 

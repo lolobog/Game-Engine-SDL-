@@ -20,7 +20,7 @@ public:
 	string Name;
 	vector<Sample*>SubSample;
 	__int64 functionTime;
-	int frameReference;
+	
 
 };
 
@@ -38,14 +38,17 @@ public:
 	void startFrame();
 	void storeSampleTime(__int64 elapsedTime);
 	void storeSampleName(const char* name);
+	vector<Sample*> GetFrameData() { return frameData; }
 	void endFrame();
 
 private:
 	int currentFrame = 0;;
+	bool isMainLoopIn = false;
 	//FrameMap frameData;
 	vector <Sample*> frameData;
+	vector <float> frameTimes;
 	std::stack<Sample*> CurrentSample;
-	Sample* sample = new Sample();
+	
 
 	
 };
@@ -65,6 +68,7 @@ struct Profile
 		startTime = std::clock();
 		
 		g_profileManager.storeSampleName(name);
+		//cout << "Stored: " << name << endl;
 
 	}
 	~Profile()
