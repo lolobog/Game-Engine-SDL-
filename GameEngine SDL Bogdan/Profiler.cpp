@@ -18,6 +18,8 @@ void ProfilerSystem::endFrame()
 	isMainLoopIn = false;
 }
 
+
+
 void ProfilerSystem::storeSampleName(const char* name)
 {
 	Sample* sample = new Sample();
@@ -30,7 +32,7 @@ void ProfilerSystem::storeSampleName(const char* name)
 		frameData.push_back(sample);
 		isMainLoopIn = true;
 	}
-
+	numberOfProfiles++;
 	CurrentSample.push(sample);
 }
 

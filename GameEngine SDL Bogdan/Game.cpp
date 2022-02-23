@@ -200,7 +200,7 @@ void Game::Update(void)
 				ImGui::EndDragDropTarget();
 			}
 			{
-				PROFILE("OPENING NODE");
+				//PROFILE("OPENING NODE");
 				if (isNodeOpen)
 				{
 					for (auto object : Root->children)
@@ -285,137 +285,168 @@ void Game::Update(void)
 
 
 		//Flame Graph
-		
-		ImGui::Begin("Flame Graph");
-
-		vector<Sample*> Snapshot;
-		vector<float>* FrameTimes=0;
-		
-
-
-		if (ImGui::Button("Take snapshot"))
 		{
-			Snapshot = g_profileManager.GetFrameData();
-			for (auto profile : Snapshot)
+			PROFILE("FLAME GRAPH");
+			ImGui::Begin("Flame Graph");
+
+			vector<Sample*> Snapshot;
+			vector<Sample*> temp;
+			vector<float> FrameTimes;
+
+
+
+			if (ImGui::Button("Take snapshot"))
 			{
-				FrameTimes->push_back(profile->functionTime);
-				for (auto subProfile : profile->SubSample)
-					FrameTimes->push_back(subProfile->functionTime);
-			}
-		}
-		int selectedFrame = Snapshot.size();
-		ImGui::SameLine();
-
-		bool LiveFlameGraph = true;
-		ImGui::Checkbox("Live Flame Graph", &LiveFlameGraph);
-		if (LiveFlameGraph)
-		{
-			selectedFrame = -1;
-		}
-
-		int range[2] = { 0,100 };
-		if (FrameTimes && FrameTimes->size() > 100)
-		{
-			ImGui::SliderInt2("Frame Range", range, 0, FrameTimes->size());
-			if (range[0] >= range[1])
-			{
-				range[0] = range[1] - 1;
-			}
-
-			vector<float>subData(FrameTimes->cbegin() + range[0], FrameTimes->cbegin() + range[1]);
-
-			int tempHitSelection = ImGui::MyPlotHistogram("Frame data", subData.data(), subData.size());
-			if (tempHitSelection != -1)
-			{
-				LiveFlameGraph = false;
-				selectedFrame = tempHitSelection;
-			}
-
-			ImRect rect = { ImGui::GetItemRectMin(),ImGui::GetItemRectMax() };
-			if (rect.Contains(scene->io->MousePos))
-			{
-				if (ImGui::IsMouseClicked(ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
+				Snapshot = g_profileManager.GetFrameData();
+				for (auto frame : Snapshot)
 				{
-					cout << selectedFrame << endl;
+					frame->PushProfiles(temp);
+				}
+				for (auto profile : temp)
+				{
+					FrameTimes.push_back(profile->functionTime);
 				}
 			}
+			int selectedFrame = Snapshot.size();
+			ImGui::SameLine();
 
-		}
+		static	bool LiveFlameGraph=false ;
+			ImGui::Checkbox("Live Flame Graph", &LiveFlameGraph);
+			if (LiveFlameGraph)
+			{
+				selectedFrame = -1;
+			}
 
-		Sample* previousFrame = g_profileManager.GetFrameData().back();
+			//nasty HACK!!!!
+			static int range[2] = { 0,g_profileManager.GetFrameData().size() };
 
-		if (!LiveFlameGraph && selectedFrame != -1)
-		{
+			ImGui::SliderInt2("Frame Range", range, 0, g_profileManager.GetFrameData().size());
+			/*if (range[0] >= range[1])
+			{
+				range[0] = range[1] - 1;
+			}*/
+
+
+
+
+			vector<float>subData; // (FrameTimes.cbegin() + range[0], FrameTimes.cbegin() + range[1]);
+			for (int i = 0; i< (range[1]- range[0]); i++)
+			{
+				Sample* s = g_profileManager.GetFrameData()[range[0] + i];
+				//FrameTimes.cbegin() + range[0], FrameTimes.cbegin() + range[1])
+				subData.push_back(s->functionTime);
+			}
+
+			int tempHitSelection = ImGui::MyPlotHistogram("Frame data", subData.data(), subData.size());
+
+
+			if (FrameTimes.size() > 100)
+			{
+				
+
 			
-			previousFrame->CopyInfo(g_profileManager.GetFrameData()[g_profileManager.GetFrameData().size() - 1]);
+
+				
+				if (tempHitSelection != -1)
+				{
+					LiveFlameGraph = false;
+					selectedFrame = tempHitSelection;
+				}
+
+				ImRect rect = { ImGui::GetItemRectMin(),ImGui::GetItemRectMax() };
+				if (rect.Contains(scene->io->MousePos))
+				{
+					if (ImGui::IsMouseClicked(ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
+					{
+						cout << selectedFrame << endl;
+					}
+				}
+
+			}
+
+			Sample* previousFrame = g_profileManager.GetFrameData().back();
+
+			/*if (!LiveFlameGraph && selectedFrame != -1)
+			{
+
+				previousFrame->CopyInfo(g_profileManager.GetFrameData()[g_profileManager.GetFrameData().size() - 1]);
+			}
+			else
+			{
+				LiveFlameGraph = false;
+			}*/
+
+			ImGui::LabelText("Frame Date Count", std::to_string(Snapshot.size()).c_str());
+			ImDrawList* drawlist = ImGui::GetCurrentWindow()->DrawList;
+			ImVec2 canvas_p0 = ImGui::GetCursorScreenPos();
+			ImVec2 canvas_sz = ImGui::GetContentRegionAvail();
+			if (canvas_sz.x < 50.0f)
+				canvas_sz.x = 50.0f;
+			if (canvas_sz.y)
+				canvas_sz.y = 50.0f;
+			ImVec2 canvas_p1 = ImVec2(canvas_p0.x + canvas_sz.x, canvas_p0.y + canvas_sz.y);
+			drawlist->PushClipRect(canvas_p0, canvas_p1, true);
+
+			uint64_t totalframeTime = 0;
+			vector<uint64_t>SampleTimes;
+			vector<float> SampleWidths;
+			vector<string> SampleNames;
+			totalframeTime += previousFrame->functionTime;
+			SampleTimes.push_back(previousFrame->functionTime+1);
+			SampleNames.push_back(previousFrame->Name);
+			for (auto subSample : previousFrame->SubSample)
+			{
+				totalframeTime += subSample->functionTime;
+				SampleTimes.push_back(subSample->functionTime+1);
+				SampleNames.push_back(subSample->Name);
+			}
+			float MinBlockWidth = canvas_sz.x / totalframeTime;
+			for (int i = 0; i < SampleTimes.size(); i++)
+			{
+				SampleWidths.push_back(SampleTimes[i] * MinBlockWidth);
+			}
+			//ImGui::LabelText("Total frame time", std::to_string(totalframeTime).c_str());
+			//ImGui::LabelText("Window width/ total frame Time", std::to_string(MinBlockWidth).c_str());
+			float TotalBlockWidthSoFar = 0;
+			int sampleCount = g_profileManager.GetFrameData().back()->GetNumberOfProfiles() +1;
+			/*if (Snapshot.size() > 0)
+			{
+				sampleCount = Snapshot.back()->GetNumberOfProfiles()+1;
+				SDL_Delay(1);
+			}
+			else
+			{
+				sampleCount = 0;
+				SDL_Delay(1);
+			}*/
+
+			const ImU32 col_outline_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x7FFFFFFF;
+			const ImU32 col_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x77FFFFFF;
+
+
+			for (int i = 0; i < sampleCount; i++)
+			{
+				float ThisBlockWidth = SampleWidths[i];
+				const ImVec2 minPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar, canvas_p0.y );
+				const ImVec2 maxPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar + ThisBlockWidth, canvas_p1.y );
+				drawlist->AddRectFilled(minPos, maxPos, col_base, GImGui->Style.FrameRounding);
+
+				drawlist->AddRect(minPos, maxPos, col_outline_base);
+
+				ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 10), SampleNames[i].c_str());
+				ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 20), std::to_string(SampleTimes[i] - 1).c_str());
+
+				TotalBlockWidthSoFar += ThisBlockWidth;
+			}
+			drawlist->PopClipRect();
+
+
+
+
+
+			ImGui::End();
+
 		}
-		else
-		{
-			LiveFlameGraph = false;
-		}
-
-		ImGui::LabelText("Frame Date Count", std::to_string(Snapshot.size()).c_str());
-		ImDrawList* drawlist = ImGui::GetCurrentWindow()->DrawList;
-		ImVec2 canvas_p0 = ImGui::GetCursorScreenPos();
-		ImVec2 canvas_sz = ImGui::GetContentRegionAvail();
-		if (canvas_sz.x < 50.0f)
-			canvas_sz.x = 50.0f;
-		if (canvas_sz.y)
-			canvas_sz.y = 50.0f;
-		ImVec2 canvas_p1 = ImVec2(canvas_p0.x + canvas_sz.x, canvas_p0.y + canvas_sz.y);
-		drawlist->PushClipRect(canvas_p0, canvas_p1, true);
-
-		uint64_t totalframeTime = 0;
-		vector<uint64_t>SampleTimes;
-		vector<float> SampleWidths;
-		vector<string> SampleNames;
-		totalframeTime +=  previousFrame->functionTime;
-		SampleTimes.push_back(previousFrame->functionTime);
-		SampleNames.push_back(previousFrame->Name);
-		for (auto subSample : previousFrame->SubSample)
-		{
-			totalframeTime += subSample->functionTime;
-			SampleTimes.push_back(subSample->functionTime);
-			SampleNames.push_back(subSample->Name);
-		}
-		float MinBlockWidth = canvas_sz.x / totalframeTime;
-		for (int i = 0;i < SampleTimes.size(); i++)
-		{
-			SampleWidths.push_back(SampleTimes[i]*MinBlockWidth);
-		}
-		ImGui::LabelText("Total frame time", std::to_string(totalframeTime).c_str());
-		ImGui::LabelText("Window width/ total frame Time", std::to_string(MinBlockWidth).c_str());
-		float TotalBlockWidthSoFar = 0;
-
-		int sampleCount = Snapshot.size();
-
-		const ImU32 col_outline_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram)& 0x7FFFFFFF;
-		const ImU32 col_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x77FFFFFF;
-
-		float f = 5.0f + 5.0f;
-
-		for (int i = 0; i < sampleCount; i++)
-		{
-			float ThisBlockWidth = SampleWidths[i];
-			const ImVec2 minPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar, canvas_p0.y + 100);
-			const ImVec2 maxPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar + ThisBlockWidth, canvas_p0.y + 200);
-			drawlist->AddRectFilled(minPos, maxPos, col_base, GImGui->Style.FrameRounding);
-			
-			drawlist->AddRect(minPos, maxPos, col_outline_base);
-
-			ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 10), SampleNames[i].c_str());
-			ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 20),std::to_string(SampleTimes[i]-1).c_str());
-
-			TotalBlockWidthSoFar += ThisBlockWidth;
-		}
-		drawlist->PopClipRect();
-
-
-
-
-
-		ImGui::End();
-		
 
 
 

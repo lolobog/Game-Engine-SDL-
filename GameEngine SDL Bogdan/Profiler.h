@@ -16,24 +16,43 @@ struct SampleData
 
 class Sample
 {
+private:
+	int profiles = 0;
 public:
 	string Name;
 	vector<Sample*>SubSample;
 	__int64 functionTime;
 	
-	void Clear()
-	{
-		Name = nullptr;
-		SubSample.clear();
-		functionTime = NULL;
-	}
+	
 	void CopyInfo(Sample* sample)
 	{
-		Clear();
+		
 		this->Name = sample->Name;
 		this->functionTime = sample->functionTime;
 		this->SubSample = sample->SubSample;
 	}
+
+	int GetNumberOfProfiles()
+	{
+		int count = 0;
+			for (auto sample : SubSample)
+			{
+				count+=1+sample->GetNumberOfProfiles();
+			}
+		
+		
+		return count;
+	}
+
+	void PushProfiles(vector<Sample*> Snapshot)
+	{
+		Snapshot.push_back(this);
+		for (auto sample : this->SubSample)
+		{
+			sample->PushProfiles(Snapshot);
+		}
+	}
+
 
 };
 
@@ -53,16 +72,16 @@ public:
 	void storeSampleName(const char* name);
 	vector<Sample*> GetFrameData() { return frameData; }
 	void endFrame();
-
+	
+	
 private:
 	int currentFrame = 0;
 	bool isMainLoopIn = false;
-	//FrameMap frameData;
+	int numberOfProfiles = 0;
 	vector <Sample*> frameData;
 	vector <float> frameTimes;
 	std::stack<Sample*> CurrentSample;
 	
-
 	
 };
 
