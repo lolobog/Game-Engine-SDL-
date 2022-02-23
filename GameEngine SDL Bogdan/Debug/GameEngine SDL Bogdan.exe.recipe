@@ -2,12 +2,12 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Tutorial-5\Debug\GameEngine SDL Bogdan.exe</FullPath>
+      <FullPath>D:\Tutorial 5\Debug\GameEngine SDL Bogdan.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>D:\Tutorial-5\GameEngine SDL Bogdan\imgui-master\imgui.h</FullPath>
+      <FullPath>D:\Tutorial 5\GameEngine SDL Bogdan\imgui-master\imgui.h</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

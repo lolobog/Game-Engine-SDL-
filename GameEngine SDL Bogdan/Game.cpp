@@ -347,7 +347,68 @@ void Game::Update(void)
 		if (!LiveFlameGraph && selectedFrame != -1)
 		{
 			
+			previousFrame->CopyInfo(g_profileManager.GetFrameData()[g_profileManager.GetFrameData().size() - 1]);
 		}
+		else
+		{
+			LiveFlameGraph = false;
+		}
+
+		ImGui::LabelText("Frame Date Count", std::to_string(Snapshot.size()).c_str());
+		ImDrawList* drawlist = ImGui::GetCurrentWindow()->DrawList;
+		ImVec2 canvas_p0 = ImGui::GetCursorScreenPos();
+		ImVec2 canvas_sz = ImGui::GetContentRegionAvail();
+		if (canvas_sz.x < 50.0f)
+			canvas_sz.x = 50.0f;
+		if (canvas_sz.y)
+			canvas_sz.y = 50.0f;
+		ImVec2 canvas_p1 = ImVec2(canvas_p0.x + canvas_sz.x, canvas_p0.y + canvas_sz.y);
+		drawlist->PushClipRect(canvas_p0, canvas_p1, true);
+
+		uint64_t totalframeTime = 0;
+		vector<uint64_t>SampleTimes;
+		vector<float> SampleWidths;
+		vector<string> SampleNames;
+		totalframeTime +=  previousFrame->functionTime;
+		SampleTimes.push_back(previousFrame->functionTime);
+		SampleNames.push_back(previousFrame->Name);
+		for (auto subSample : previousFrame->SubSample)
+		{
+			totalframeTime += subSample->functionTime;
+			SampleTimes.push_back(subSample->functionTime);
+			SampleNames.push_back(subSample->Name);
+		}
+		float MinBlockWidth = canvas_sz.x / totalframeTime;
+		for (int i = 0;i < SampleTimes.size(); i++)
+		{
+			SampleWidths.push_back(SampleTimes[i]*MinBlockWidth);
+		}
+		ImGui::LabelText("Total frame time", std::to_string(totalframeTime).c_str());
+		ImGui::LabelText("Window width/ total frame Time", std::to_string(MinBlockWidth).c_str());
+		float TotalBlockWidthSoFar = 0;
+
+		int sampleCount = Snapshot.size();
+
+		const ImU32 col_outline_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram)& 0x7FFFFFFF;
+		const ImU32 col_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x77FFFFFF;
+
+		float f = 5.0f + 5.0f;
+
+		for (int i = 0; i < sampleCount; i++)
+		{
+			float ThisBlockWidth = SampleWidths[i];
+			const ImVec2 minPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar, canvas_p0.y + 100);
+			const ImVec2 maxPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar + ThisBlockWidth, canvas_p0.y + 200);
+			drawlist->AddRectFilled(minPos, maxPos, col_base, GImGui->Style.FrameRounding);
+			
+			drawlist->AddRect(minPos, maxPos, col_outline_base);
+
+			ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 10), SampleNames[i].c_str());
+			ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 20),std::to_string(SampleTimes[i]-1).c_str());
+
+			TotalBlockWidthSoFar += ThisBlockWidth;
+		}
+		drawlist->PopClipRect();
 
 
 

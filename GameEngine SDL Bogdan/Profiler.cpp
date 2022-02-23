@@ -13,8 +13,6 @@ void ProfilerSystem::startFrame()
 	currentFrame++;
 }
 
-
-
 void ProfilerSystem::endFrame()
 {
 	isMainLoopIn = false;

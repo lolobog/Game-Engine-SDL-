@@ -21,6 +21,19 @@ public:
 	vector<Sample*>SubSample;
 	__int64 functionTime;
 	
+	void Clear()
+	{
+		Name = nullptr;
+		SubSample.clear();
+		functionTime = NULL;
+	}
+	void CopyInfo(Sample* sample)
+	{
+		Clear();
+		this->Name = sample->Name;
+		this->functionTime = sample->functionTime;
+		this->SubSample = sample->SubSample;
+	}
 
 };
 
@@ -42,7 +55,7 @@ public:
 	void endFrame();
 
 private:
-	int currentFrame = 0;;
+	int currentFrame = 0;
 	bool isMainLoopIn = false;
 	//FrameMap frameData;
 	vector <Sample*> frameData;
