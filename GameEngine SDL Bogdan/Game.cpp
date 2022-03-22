@@ -134,7 +134,7 @@ void Game::Update(void)
 
 		CheckEvents();
 		SDL_RenderClear(m_Renderer);
-
+		
 		ImGui::NewFrame();
 		ImGui_ImplSDL2_NewFrame(m_Window);
 		bool show = true;

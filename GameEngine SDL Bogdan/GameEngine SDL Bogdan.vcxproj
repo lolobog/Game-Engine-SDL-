@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Tutorial 5\SDL2_image-2.0.5\include;..\SDL2-2.0.16\include;D:\Tutorial 5\GameEngine SDL Bogdan\imgui_sdl-master;D:\Tutorial 5\GameEngine SDL Bogdan\imgui-master;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Tutorial 5\SDL2_image-2.0.5\lib\x86;..\SDL2-2.0.16\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\SDL2_image-2.0.5\include;..\SDL2-2.0.16\include;..\GameEngine SDL Bogdan\imgui_sdl-master;..\GameEngine SDL Bogdan\imgui-master;$(IncludePath)</IncludePath>
+    <LibraryPath>..\SDL2_image-2.0.5\lib\x86;..\SDL2-2.0.16\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -98,7 +98,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\Tutorial-5\SDL2_image-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\SDL2_image-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="creature.h" />
+    <ClInclude Include="Debugging.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Flamegraph.h" />
