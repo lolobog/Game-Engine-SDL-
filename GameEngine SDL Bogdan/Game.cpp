@@ -143,100 +143,104 @@ void Game::Update(void)
 			scene->Update();
 
 		}
-		//ImGui::ShowDemoWindow(nullptr);
+		if (showGui == true)
 		{
-			PROFILE("ASSETS GRABBING");
-			count++;
-			if (count % 120 == 0)
+			//ImGui::ShowDemoWindow(nullptr);
 			{
-				std::string AssetPath = "../GameEngine SDL Bogdan/assets";
-				for (const auto& entry : std::filesystem::directory_iterator(AssetPath)) //directory_iterator(path) //recursive_
+				PROFILE("ASSETS GRABBING");
+				count++;
+				if (count % 120 == 0)
 				{
-					if (entry.path().extension() == ".bmp" || entry.path().extension() == ".jpg" || entry.path().extension() == ".png")
+					std::string AssetPath = "../GameEngine SDL Bogdan/assets";
+					for (const auto& entry : std::filesystem::directory_iterator(AssetPath)) //directory_iterator(path) //recursive_
 					{
-						bool isInVector = false;
-						for (auto bitmap : content)
+						if (entry.path().extension() == ".bmp" || entry.path().extension() == ".jpg" || entry.path().extension() == ".png")
 						{
-							if (bitmap->GetFilePath() == entry.path().string())
-								isInVector = true;
+							bool isInVector = false;
+							for (auto bitmap : content)
+							{
+								if (bitmap->GetFilePath() == entry.path().string())
+									isInVector = true;
+							}
+							if (isInVector == false)
+							{
+								Bitmap* Asset = new Bitmap(m_Renderer, entry.path().string(), true);
+								content.push_back(Asset);
+								numberOfImages++;
+							}
+
 						}
-						if (isInVector == false)
+						else if (entry.is_directory())
 						{
-							Bitmap* Asset = new Bitmap(m_Renderer, entry.path().string(), true);
-							content.push_back(Asset);
-							numberOfImages++;
+							std::cout << "dir " << entry.path() << std::endl;
 						}
+						//debug
+						std::cout << entry.path() << std::endl;
+					}
 
-					}
-					else if (entry.is_directory())
-					{
-						std::cout << "dir " << entry.path() << std::endl;
-					}
-					//debug
-					std::cout << entry.path() << std::endl;
 				}
-
+				SDL_Delay(4);
 			}
-			SDL_Delay(4);
-		}
-		{
-			PROFILE("GO HIERARCHY");
-			ImGui::Begin("GameObjects", 0, ImGuiWindowFlags_NoMove);
-			ImGui::SetWindowPos({ 0,menuHeight });
-			ImGui::SetWindowSize({ 150,screenHeight - menuHeight });
-
-			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
-			GameObject* Root = scene->GetRoot();
-			bool isNodeOpen = ImGui::TreeNodeEx(Root->objectName.c_str(), nodeFlags);
-			if (ImGui::BeginDragDropTarget())
 			{
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
+				PROFILE("GO HIERARCHY");
+
+
+				ImGui::Begin("GameObjects", 0, ImGuiWindowFlags_NoMove);
+				ImGui::SetWindowPos({ 0,menuHeight });
+				ImGui::SetWindowSize({ 150,screenHeight - menuHeight });
+
+				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
+				GameObject* Root = scene->GetRoot();
+				bool isNodeOpen = ImGui::TreeNodeEx(Root->objectName.c_str(), nodeFlags);
+				if (ImGui::BeginDragDropTarget())
 				{
-					GameObject* PayloadAsGameObject = static_cast<GameObject*>(I_GUI::EditorToShow);
-					std::cout << PayloadAsGameObject->objectName << " on top of " << Root->objectName << std::endl;
-
-					PayloadAsGameObject->SetParent(Root);
-				}
-				ImGui::EndDragDropTarget();
-			}
-			{
-				//PROFILE("OPENING NODE");
-				if (isNodeOpen)
-				{
-					for (auto object : Root->children)
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
 					{
-						if (object->parent->objectName == "Root")
-							//if(ImGui::TreeNodeEx(object->objectName.c_str(),nodeFlags))
-							object->DrawChildGUI();
+						GameObject* PayloadAsGameObject = static_cast<GameObject*>(I_GUI::EditorToShow);
+						std::cout << PayloadAsGameObject->objectName << " on top of " << Root->objectName << std::endl;
+
+						PayloadAsGameObject->SetParent(Root);
 					}
-					ImGui::TreePop();//poping root
+					ImGui::EndDragDropTarget();
 				}
-				
+				{
+					//PROFILE("OPENING NODE");
+					if (isNodeOpen)
+					{
+						for (auto object : Root->children)
+						{
+							if (object->parent->objectName == "Root")
+								//if(ImGui::TreeNodeEx(object->objectName.c_str(),nodeFlags))
+								object->DrawChildGUI();
+						}
+						ImGui::TreePop();//poping root
+					}
+
+				}
+
+
+				ImGui::End();
+
+
+
+				if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && AssetMouseDrag != nullptr)
+				{
+					cout << "It is working?!" << endl;
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+
+
+
+					GameObject* obj = new GameObject(AssetMouseDrag->GetFileName(), m_Renderer, AssetMouseDrag, *scene->io, 100, 100, x, y, 0);
+					scene->SceneObjects.push_back(obj);
+					scene->GetRoot()->AddChild(obj);
+
+					AssetMouseDrag = nullptr;
+				}
+				SDL_Delay(4);
 			}
 
-
-			ImGui::End();
-
-
-
-			if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && AssetMouseDrag != nullptr)
-			{
-				cout << "It is working?!" << endl;
-				int x, y;
-				SDL_GetMouseState(&x, &y);
-
-
-
-				GameObject* obj = new GameObject(AssetMouseDrag->GetFileName(), m_Renderer, AssetMouseDrag, *scene->io, 100, 100, x, y, 0);
-				scene->SceneObjects.push_back(obj);
-				scene->GetRoot()->AddChild(obj);
-
-				AssetMouseDrag = nullptr;
-			}
-			SDL_Delay(4);
-		}
-
-		{ PROFILE("CONTENT WINDOW");
+			{ PROFILE("CONTENT WINDOW");
 
 			ImGui::Begin("Content Window");
 
@@ -264,188 +268,189 @@ void Game::Update(void)
 			ImGui::End();
 
 
-		}
-
-		{
-			PROFILE("PROFILER WINDOW");
-			//Profiler Window
-			ImGui::Begin("Profiler");
-
-			ImGui::PlotLines("Frames", m_timer.FrameTimeQueue.data(), m_timer.capacity);
-			char buffer[64];
-			snprintf(buffer, sizeof(buffer), "Average Frame Time %f ms", m_timer.AverageTime());
-			ImGui::Text(buffer);
-
-			ImGui::End();
-
-
-			SDL_Delay(4);
-
-		}
-
-
-		//Flame Graph
-		{
-			PROFILE("FLAME GRAPH");
-			ImGui::Begin("Flame Graph");
-
-			vector<Sample*> Snapshot;
-			vector<Sample*> temp;
-			vector<float> FrameTimes;
-
-
-
-			if (ImGui::Button("Take snapshot"))
-			{
-				Snapshot = g_profileManager.GetFrameData();
-				for (auto frame : Snapshot)
-				{
-					frame->PushProfiles(temp);
-				}
-				for (auto profile : temp)
-				{
-					FrameTimes.push_back(profile->functionTime);
-				}
-			}
-			int selectedFrame = Snapshot.size();
-			ImGui::SameLine();
-
-		static	bool LiveFlameGraph=false ;
-			ImGui::Checkbox("Live Flame Graph", &LiveFlameGraph);
-			if (LiveFlameGraph)
-			{
-				selectedFrame = -1;
 			}
 
-			//nasty HACK!!!!
-			static int range[2] = { 0,g_profileManager.GetFrameData().size() };
-
-			ImGui::SliderInt2("Frame Range", range, 0, g_profileManager.GetFrameData().size());
-			/*if (range[0] >= range[1])
 			{
-				range[0] = range[1] - 1;
-			}*/
+				PROFILE("PROFILER WINDOW");
+				//Profiler Window
+				ImGui::Begin("Profiler");
+
+				ImGui::PlotLines("Frames", m_timer.FrameTimeQueue.data(), m_timer.capacity);
+				char buffer[64];
+				snprintf(buffer, sizeof(buffer), "Average Frame Time %f ms", m_timer.AverageTime());
+				ImGui::Text(buffer);
+
+				ImGui::End();
 
 
+				SDL_Delay(4);
 
-
-			vector<float>subData; // (FrameTimes.cbegin() + range[0], FrameTimes.cbegin() + range[1]);
-			for (int i = 0; i< (range[1]- range[0]); i++)
-			{
-				Sample* s = g_profileManager.GetFrameData()[range[0] + i];
-				//FrameTimes.cbegin() + range[0], FrameTimes.cbegin() + range[1])
-				subData.push_back(s->functionTime);
 			}
 
-			int tempHitSelection = ImGui::MyPlotHistogram("Frame data", subData.data(), subData.size());
 
-
-			if (FrameTimes.size() > 100)
+			//Flame Graph
 			{
-				
+				PROFILE("FLAME GRAPH");
+				ImGui::Begin("Flame Graph");
 
-			
+				vector<Sample*> Snapshot;
+				vector<Sample*> temp;
+				vector<float> FrameTimes;
 
-				
-				if (tempHitSelection != -1)
+
+
+				if (ImGui::Button("Take snapshot"))
 				{
-					LiveFlameGraph = false;
-					selectedFrame = tempHitSelection;
-				}
-
-				ImRect rect = { ImGui::GetItemRectMin(),ImGui::GetItemRectMax() };
-				if (rect.Contains(scene->io->MousePos))
-				{
-					if (ImGui::IsMouseClicked(ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
+					Snapshot = g_profileManager.GetFrameData();
+					for (auto frame : Snapshot)
 					{
-						cout << selectedFrame << endl;
+						frame->PushProfiles(temp);
+					}
+					for (auto profile : temp)
+					{
+						FrameTimes.push_back(profile->functionTime);
 					}
 				}
+				int selectedFrame = Snapshot.size();
+				ImGui::SameLine();
+
+				static	bool LiveFlameGraph = false;
+				ImGui::Checkbox("Live Flame Graph", &LiveFlameGraph);
+				if (LiveFlameGraph)
+				{
+					selectedFrame = -1;
+				}
+
+				//nasty HACK!!!!
+				static int range[2] = { 0,g_profileManager.GetFrameData().size() };
+
+				ImGui::SliderInt2("Frame Range", range, 0, g_profileManager.GetFrameData().size());
+				/*if (range[0] >= range[1])
+				{
+					range[0] = range[1] - 1;
+				}*/
+
+
+
+
+				vector<float>subData; // (FrameTimes.cbegin() + range[0], FrameTimes.cbegin() + range[1]);
+				for (int i = 0; i < (range[1] - range[0]); i++)
+				{
+					Sample* s = g_profileManager.GetFrameData()[range[0] + i];
+					//FrameTimes.cbegin() + range[0], FrameTimes.cbegin() + range[1])
+					subData.push_back(s->functionTime);
+				}
+
+				int tempHitSelection = ImGui::MyPlotHistogram("Frame data", subData.data(), subData.size());
+
+
+				if (FrameTimes.size() > 100)
+				{
+
+
+
+
+
+					if (tempHitSelection != -1)
+					{
+						LiveFlameGraph = false;
+						selectedFrame = tempHitSelection;
+					}
+
+					ImRect rect = { ImGui::GetItemRectMin(),ImGui::GetItemRectMax() };
+					if (rect.Contains(scene->io->MousePos))
+					{
+						if (ImGui::IsMouseClicked(ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
+						{
+							cout << selectedFrame << endl;
+						}
+					}
+
+				}
+
+				Sample* previousFrame = g_profileManager.GetFrameData().back();
+
+				/*if (!LiveFlameGraph && selectedFrame != -1)
+				{
+
+					previousFrame->CopyInfo(g_profileManager.GetFrameData()[g_profileManager.GetFrameData().size() - 1]);
+				}
+				else
+				{
+					LiveFlameGraph = false;
+				}*/
+
+				ImGui::LabelText("Frame Date Count", std::to_string(Snapshot.size()).c_str());
+				ImDrawList* drawlist = ImGui::GetCurrentWindow()->DrawList;
+				ImVec2 canvas_p0 = ImGui::GetCursorScreenPos();
+				ImVec2 canvas_sz = ImGui::GetContentRegionAvail();
+				if (canvas_sz.x < 50.0f)
+					canvas_sz.x = 50.0f;
+				if (canvas_sz.y)
+					canvas_sz.y = 50.0f;
+				ImVec2 canvas_p1 = ImVec2(canvas_p0.x + canvas_sz.x, canvas_p0.y + canvas_sz.y);
+				drawlist->PushClipRect(canvas_p0, canvas_p1, true);
+
+				uint64_t totalframeTime = 0;
+				vector<uint64_t>SampleTimes;
+				vector<float> SampleWidths;
+				vector<string> SampleNames;
+				totalframeTime += previousFrame->functionTime;
+				SampleTimes.push_back(previousFrame->functionTime + 1);
+				SampleNames.push_back(previousFrame->Name);
+				for (auto subSample : previousFrame->SubSample)
+				{
+					totalframeTime += subSample->functionTime;
+					SampleTimes.push_back(subSample->functionTime + 1);
+					SampleNames.push_back(subSample->Name);
+				}
+				float MinBlockWidth = canvas_sz.x / totalframeTime;
+				for (int i = 0; i < SampleTimes.size(); i++)
+				{
+					SampleWidths.push_back(SampleTimes[i] * MinBlockWidth);
+				}
+				//ImGui::LabelText("Total frame time", std::to_string(totalframeTime).c_str());
+				//ImGui::LabelText("Window width/ total frame Time", std::to_string(MinBlockWidth).c_str());
+				float TotalBlockWidthSoFar = 0;
+				int sampleCount = g_profileManager.GetFrameData().back()->GetNumberOfProfiles() + 1;
+				/*if (Snapshot.size() > 0)
+				{
+					sampleCount = Snapshot.back()->GetNumberOfProfiles()+1;
+					SDL_Delay(1);
+				}
+				else
+				{
+					sampleCount = 0;
+					SDL_Delay(1);
+				}*/
+
+				const ImU32 col_outline_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x7FFFFFFF;
+				const ImU32 col_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x77FFFFFF;
+
+
+				for (int i = 0; i < sampleCount; i++)
+				{
+					float ThisBlockWidth = SampleWidths[i];
+					const ImVec2 minPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar, canvas_p0.y);
+					const ImVec2 maxPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar + ThisBlockWidth, canvas_p1.y);
+					drawlist->AddRectFilled(minPos, maxPos, col_base, GImGui->Style.FrameRounding);
+
+					drawlist->AddRect(minPos, maxPos, col_outline_base);
+
+					ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 10), SampleNames[i].c_str());
+					ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 20), std::to_string(SampleTimes[i] - 1).c_str());
+
+					TotalBlockWidthSoFar += ThisBlockWidth;
+				}
+				drawlist->PopClipRect();
+
+
+
+
+
+				ImGui::End();
 
 			}
-
-			Sample* previousFrame = g_profileManager.GetFrameData().back();
-
-			/*if (!LiveFlameGraph && selectedFrame != -1)
-			{
-
-				previousFrame->CopyInfo(g_profileManager.GetFrameData()[g_profileManager.GetFrameData().size() - 1]);
-			}
-			else
-			{
-				LiveFlameGraph = false;
-			}*/
-
-			ImGui::LabelText("Frame Date Count", std::to_string(Snapshot.size()).c_str());
-			ImDrawList* drawlist = ImGui::GetCurrentWindow()->DrawList;
-			ImVec2 canvas_p0 = ImGui::GetCursorScreenPos();
-			ImVec2 canvas_sz = ImGui::GetContentRegionAvail();
-			if (canvas_sz.x < 50.0f)
-				canvas_sz.x = 50.0f;
-			if (canvas_sz.y)
-				canvas_sz.y = 50.0f;
-			ImVec2 canvas_p1 = ImVec2(canvas_p0.x + canvas_sz.x, canvas_p0.y + canvas_sz.y);
-			drawlist->PushClipRect(canvas_p0, canvas_p1, true);
-
-			uint64_t totalframeTime = 0;
-			vector<uint64_t>SampleTimes;
-			vector<float> SampleWidths;
-			vector<string> SampleNames;
-			totalframeTime += previousFrame->functionTime;
-			SampleTimes.push_back(previousFrame->functionTime+1);
-			SampleNames.push_back(previousFrame->Name);
-			for (auto subSample : previousFrame->SubSample)
-			{
-				totalframeTime += subSample->functionTime;
-				SampleTimes.push_back(subSample->functionTime+1);
-				SampleNames.push_back(subSample->Name);
-			}
-			float MinBlockWidth = canvas_sz.x / totalframeTime;
-			for (int i = 0; i < SampleTimes.size(); i++)
-			{
-				SampleWidths.push_back(SampleTimes[i] * MinBlockWidth);
-			}
-			//ImGui::LabelText("Total frame time", std::to_string(totalframeTime).c_str());
-			//ImGui::LabelText("Window width/ total frame Time", std::to_string(MinBlockWidth).c_str());
-			float TotalBlockWidthSoFar = 0;
-			int sampleCount = g_profileManager.GetFrameData().back()->GetNumberOfProfiles() +1;
-			/*if (Snapshot.size() > 0)
-			{
-				sampleCount = Snapshot.back()->GetNumberOfProfiles()+1;
-				SDL_Delay(1);
-			}
-			else
-			{
-				sampleCount = 0;
-				SDL_Delay(1);
-			}*/
-
-			const ImU32 col_outline_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x7FFFFFFF;
-			const ImU32 col_base = ImGui::GetColorU32(ImGuiCol_PlotHistogram) & 0x77FFFFFF;
-
-
-			for (int i = 0; i < sampleCount; i++)
-			{
-				float ThisBlockWidth = SampleWidths[i];
-				const ImVec2 minPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar, canvas_p0.y );
-				const ImVec2 maxPos = ImVec2(canvas_p0.x + TotalBlockWidthSoFar + ThisBlockWidth, canvas_p1.y );
-				drawlist->AddRectFilled(minPos, maxPos, col_base, GImGui->Style.FrameRounding);
-
-				drawlist->AddRect(minPos, maxPos, col_outline_base);
-
-				ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 10), SampleNames[i].c_str());
-				ImGui::RenderText(ImVec2(minPos.x + 10, minPos.y + 20), std::to_string(SampleTimes[i] - 1).c_str());
-
-				TotalBlockWidthSoFar += ThisBlockWidth;
-			}
-			drawlist->PopClipRect();
-
-
-
-
-
-			ImGui::End();
-
 		}
 
 

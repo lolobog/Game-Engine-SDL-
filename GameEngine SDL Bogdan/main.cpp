@@ -31,6 +31,13 @@ int main(int argc, char* argv[])
 				game->scene->Player->setX(game->scene->Player->getPosition().x - 10);
 			if (input->KeyIsPressed(KEY_D))
 				game->scene->Player->setX(game->scene->Player->getPosition().x + 10);
+			if (input->KeyIsPressed(KEY_G))
+					game->showGui = false;
+			if(input->KeyIsPressed(KEY_R))
+				game->showGui = true;
+				
+					
+
 
 			game->SetDisplayColour(r, g, b, a);
 			game->Update();

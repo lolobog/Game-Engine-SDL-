@@ -26,6 +26,7 @@ private:
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
 	bool m_running;
+	
 	Input PlayerInput;
 	FrameTimer m_timer;
 	int count = 0;
@@ -40,6 +41,8 @@ private:
 	
 
 public:
+	bool showGui = true;
+
 	Game();
 	~Game();
 

@@ -1,38 +1,14 @@
-﻿  Game.cpp
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(93,22): warning C4018: '<': signed/unsigned mismatch
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(160,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(161,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(166,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(167,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\FrameTimer.h(37,21): warning C4018: '<': signed/unsigned mismatch
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(22,3): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(21,3): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(30,10): warning C4473: 'printf' : not enough arguments passed for format string
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(30,10): message : placeholders and their parameters expect 1 variadic arguments, but 0 were provided
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(30,10): message : the missing variadic argument 1 is required by format string '%s'
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(44,10): warning C4473: 'printf' : not enough arguments passed for format string
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(44,10): message : placeholders and their parameters expect 1 variadic arguments, but 0 were provided
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(44,10): message : the missing variadic argument 1 is required by format string '%s'
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(129,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(230,122): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(230,119): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(243,22): warning C4018: '<': signed/unsigned mismatch
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(307,34): warning C4244: 'argument': conversion from '__int64' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(321,66): warning C4838: conversion from 'unsigned int' to 'int' requires a narrowing conversion
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(337,24): warning C4244: 'argument': conversion from '__int64' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\Game.cpp(404,22): warning C4018: '<': signed/unsigned mismatch
-  GameEngine SDL Bogdan.vcxproj -> D:\S210641\Game-Engine-SDL-\Debug\GameEngine SDL Bogdan.exe
+﻿  main.cpp
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(93,22): warning C4018: '<': signed/unsigned mismatch
+D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(160,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(161,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(166,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(167,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\FrameTimer.h(37,21): warning C4018: '<': signed/unsigned mismatch
+  GameEngine SDL Bogdan.vcxproj -> D:\Tutorial-5\Debug\GameEngine SDL Bogdan.exe
