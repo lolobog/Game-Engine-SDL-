@@ -10,6 +10,7 @@
 #include "imgui-master/imgui_internal.h"
 #include "I_GUI.h"
 #include <iostream>
+#include "Physics.h"
 
 struct Transform 
 {
@@ -63,6 +64,7 @@ protected:
 	ImGuiIO* io;
 	
 public:
+	Physics* collider = new Physics(this);
 	std::vector<std::string> Tags;
 	Bitmap* m_bitmap;
 	Transform* transform;

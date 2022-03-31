@@ -163,6 +163,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="I_GUI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Resource_Manager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="imgui_sdl-master\imgui_sdl.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="I_GUI.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Resource_Manager.h" />
     <ClInclude Include="Scene.h" />

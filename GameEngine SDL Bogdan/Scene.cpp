@@ -28,6 +28,25 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	Root->AddChild(Player);
 	SceneObjects.push_back(Player);
 
+	Walls.push_back(new GameObject("Wall1", renderer, new Bitmap(renderer, "Assets/wall_vertical.png", true), _io, 40, 1000, 0, 0, 0));
+	SceneObjects.push_back(Walls[0]);
+	Root->AddChild(Walls[0]);
+
+	Walls.push_back(new GameObject("Wall2", renderer, new Bitmap(renderer, "Assets/wall_horizontal.png", true), _io, 1000, 40, 0, 0, 0));
+	SceneObjects.push_back(Walls[1]);
+	Root->AddChild(Walls[1]);
+
+	Walls.push_back(new GameObject("Wall3", renderer, new Bitmap(renderer, "Assets/wall_vertical.png", true), _io, 40, 1000, 920, 0, 0));
+	SceneObjects.push_back(Walls[2]);
+	Root->AddChild(Walls[2]);
+
+	Walls.push_back(new GameObject("Wall4", renderer, new Bitmap(renderer, "Assets/wall_horizontal.png", true), _io, 1000, 40, 0, 700, 0));
+	SceneObjects.push_back(Walls[3]);
+	Root->AddChild(Walls[3]);
+
+
+	
+
 	Player->AddChild(SceneObjects[1]);
 
 	
@@ -35,6 +54,54 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 
 void Scene::Update()
 {
+	
+
+
+	for (auto obj : Walls)
+	{
+		if (Player->collider->CheckCollision(obj))
+		{
+			
+
+			if (Player->collider->CheckYCollision(obj))
+			{
+				if((obj->transform->y - Player->transform->y)<=0)
+					Player->transform->y = Player->transform->y + 10;
+				else
+					Player->transform->y = Player->transform->y - 10;
+				cout << "Y collision\n";
+			}
+			
+
+		}
+	}
+
+	for (auto obj : Walls)
+	{
+		if (Player->collider->CheckCollision(obj))
+		{
+
+
+			if (Player->collider->CheckXCollision(obj))
+			{
+				if ((obj->transform->x - Player->transform->x) <= 0)
+				{
+					Player->transform->x = Player->transform->x + 10;
+					Player->transform->y = Player->transform->y - 10;
+				}
+				else
+				{
+					Player->transform->x = Player->transform->x - 10;
+					Player->transform->y = Player->transform->y - 10;
+				}
+				cout << "X collision\n";
+			}
+
+
+		}
+	}
+		
+
 	
 	
 		for (auto object : SceneObjects)

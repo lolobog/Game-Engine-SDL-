@@ -41,7 +41,7 @@ private:
 	
 
 public:
-	bool showGui = true;
+	bool showGui = false;
 
 	Game();
 	~Game();

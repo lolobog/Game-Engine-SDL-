@@ -25,6 +25,7 @@ private:
 		GameObject* Root;
 public:
 	vector <GameObject*> SceneObjects;
+	vector <GameObject*> Walls;
 	//vector <vector <GameObject*>> LayerObjects;
 	Hero* Player;
 	ImGuiIO* io = nullptr;
