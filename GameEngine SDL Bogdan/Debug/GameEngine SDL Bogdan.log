@@ -1,8 +1,8 @@
 ﻿  Scene.cpp
-D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(95,22): warning C4018: '<': signed/unsigned mismatch
-D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(162,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(163,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(168,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(169,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Tutorial-5\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  GameEngine SDL Bogdan.vcxproj -> D:\Tutorial-5\Debug\GameEngine SDL Bogdan.exe
+D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(95,22): warning C4018: '<': signed/unsigned mismatch
+D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(162,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(163,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(168,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\GameObject.h(169,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\S210641\Game-Engine-SDL-\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  GameEngine SDL Bogdan.vcxproj -> D:\S210641\Game-Engine-SDL-\Debug\GameEngine SDL Bogdan.exe

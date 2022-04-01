@@ -75,6 +75,7 @@ bool Physics::CheckXCollision(GameObject* obj2)
     if (bottom1 <= top2)
     {
         return false;
+        
     }
 
     if (top1 >= bottom2)

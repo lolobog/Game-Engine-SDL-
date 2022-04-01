@@ -26,8 +26,10 @@ private:
 public:
 	vector <GameObject*> SceneObjects;
 	vector <GameObject*> Walls;
+	vector <GameObject*> Collidables;
 	//vector <vector <GameObject*>> LayerObjects;
 	Hero* Player;
+	GameObject* Key;
 	ImGuiIO* io = nullptr;
 	
 

@@ -22,6 +22,8 @@ public:
 
 	void InputUpdate(Input input);
 
+	bool keyCollected = false;
+
 private:
 	int speed = 2;
 	int hp = 3;
