@@ -51,16 +51,7 @@ GameObject::~GameObject()
 {
 }
 
-void GameObject::OnEvent(Event& event)
-{
-	switch (event.type)
-	{
-	case Event_Object_Collected:
-		break;
-	default:
-		break;
-	}
-}
+
 
 void GameObject::setPosition(Vector2D newPos)
 {

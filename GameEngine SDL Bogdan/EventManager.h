@@ -16,6 +16,7 @@ typedef std::map<EventType, std::vector<IEventHandler*>> eventMap;
 
 class EventManger
 {
+public:
 	eventMap listeners;
 	
 	bool AddListener(EventType type, IEventHandler* listener);

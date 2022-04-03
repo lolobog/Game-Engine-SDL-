@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "hero.h"
+#include "creature.h"
 #include <vector>
 
 
@@ -27,9 +28,13 @@ public:
 	vector <GameObject*> SceneObjects;
 	vector <GameObject*> Walls;
 	vector <GameObject*> Collidables;
+	vector <Creature*>CreatureAIs;
 	//vector <vector <GameObject*>> LayerObjects;
+	EventManger* EventManager = new EventManger();
+	CollectionEvent* keyCollected= new CollectionEvent();
 	Hero* Player;
 	GameObject* Key;
+	GameObject* Door;
 	ImGuiIO* io = nullptr;
 	
 

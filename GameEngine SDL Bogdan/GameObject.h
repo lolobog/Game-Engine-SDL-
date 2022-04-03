@@ -81,7 +81,7 @@ public:
 
 	~GameObject();
 	
-	virtual void OnEvent(Event& event);
+	
 
 	//Hierarchy
 	GameObject* parent = nullptr;
@@ -146,7 +146,17 @@ public:
 
 	void Draw();
 
-	void LogicUpdate();
+	virtual void LogicUpdate();
+
+	void OnEvent(Event* event)
+	{
+		this->transform->h = 0;
+		this->transform->w = 0;
+		this->transform->x = 0;
+		this->transform->y = 0;
+		this->transform->z = 0;
+
+	}
 
 
 	virtual void Update()
@@ -161,8 +171,8 @@ public:
 		SDL_Rect rect;
 		rect.x = transform->x;
 		rect.y = transform->y;
-		rect.h = m_bitmap->GetSurface()->h;
-		rect.w = m_bitmap->GetSurface()->w;
+		rect.h = transform->h;
+		rect.w = transform->w;
 
 		SDL_Point point;
 		point.x = io->MousePos.x;

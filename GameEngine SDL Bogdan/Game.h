@@ -34,7 +34,7 @@ private:
 	int numberOfImages = 0;
 	float screenHeight = 720;
 	float screenWidth = 960;
-	float menuHeight = 20;
+	float menuHeight = 10;
 	Bitmap* AssetMouseDrag;
 	
 	

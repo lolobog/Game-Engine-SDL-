@@ -17,21 +17,44 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	Root=	new GameObject("Root", renderer, _io, 0, 0, 0, 0, 0);
 	SceneObjects.push_back(Root);
 	
-	SceneObjects.push_back(new GameObject("Monster1", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 30, 30, 200, 100, 0));
+
+	SceneObjects.push_back(new Creature(renderer, new Bitmap(renderer, "Assets/goomba.png", true), _io, 60, 60, 833, 157, 0));
 	SceneObjects[1]->SetParent(Root);
-	//Root->AddChild(SceneObjects[1]);
+	CreatureAIs.push_back((Creature*)SceneObjects[1]);
+	CreatureAIs[0]->target1 = 50; CreatureAIs[0]->target2 = 370;
+	Collidables.push_back(CreatureAIs[0]);
 
-	SceneObjects.push_back(new GameObject("Monster2", renderer, new Bitmap(renderer, "Assets/monstertrans.bmp", true), _io, 50, 50, 200, 100, 0));
-	Root->AddChild(SceneObjects[2]);
+	SceneObjects.push_back(new Creature(renderer, new Bitmap(renderer, "Assets/goomba.png", true), _io, 60, 60, 573, 350, 0));
+	SceneObjects[2]->SetParent(Root);
+	CreatureAIs.push_back((Creature*)SceneObjects[2]);
+	CreatureAIs[1]->target1 = 500; CreatureAIs[1]->target2 = 180;
+	Collidables.push_back(CreatureAIs[1]);
 
-	Player = new Hero(renderer, new Bitmap(renderer, "Assets/hero.bmp", true), _io, 100, 100, 100, 200, 0);
+	SceneObjects.push_back(new Creature(renderer, new Bitmap(renderer, "Assets/goomba.png", true), _io, 60, 60, 373, 350, 0));
+	SceneObjects[3]->SetParent(Root);
+	CreatureAIs.push_back((Creature*)SceneObjects[3]);
+	CreatureAIs[2]->target1 = 180; CreatureAIs[2]->target2 = 500;
+	Collidables.push_back(CreatureAIs[2]);
+
+
+	Player = new Hero(renderer, new Bitmap(renderer, "Assets/hero.bmp", true), _io, 80, 80, 40, 40, 0);
 	Root->AddChild(Player);
 	SceneObjects.push_back(Player);
 
-	Key = new GameObject("Monster2", renderer, new Bitmap(renderer, "Assets/key.png", true), _io, 50, 50, 500, 500, 0);
+	Key = new GameObject("Key", renderer, new Bitmap(renderer, "Assets/key.png", true), _io, 70, 70, 862, 505, 0);
 	Root->AddChild(Key);
 	SceneObjects.push_back(Key);
 	Collidables.push_back(Key);
+
+	Door = new GameObject("Door", renderer, new Bitmap(renderer, "Assets/door.png", true), _io, 100, 100, 843, 610, 0);
+	Root->AddChild(Door);
+	SceneObjects.push_back(Door);
+	Collidables.push_back(Door);
+
+	EventManager->AddListener(Event_Object_Collected, Player);
+	EventManager->AddListener(Event_Object_Collected, Key);
+	
+
 
 	Walls.push_back(new GameObject("Outer Left Wall", renderer, new Bitmap(renderer, "Assets/wall_vertical.png", true), _io, 40, 1000, 0, 0, 0));
 	SceneObjects.push_back(Walls[0]);
@@ -48,6 +71,23 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	Walls.push_back(new GameObject("Outer Bottom Wall", renderer, new Bitmap(renderer, "Assets/wall_horizontal.png", true), _io, 1000, 40, 0, 700, 0));
 	SceneObjects.push_back(Walls[3]);
 	Root->AddChild(Walls[3]);
+
+	Walls.push_back(new GameObject("Inner Wall Bottom", renderer, new Bitmap(renderer, "Assets/wall_horizontal.png", true), _io, 1000, 40, 200, 575, 0));
+	SceneObjects.push_back(Walls[4]);
+	Root->AddChild(Walls[4]);
+
+	Walls.push_back(new GameObject("Inner Wall Top", renderer, new Bitmap(renderer, "Assets/wall_horizontal.png", true), _io, 700, 40, 40, 120, 0));
+	SceneObjects.push_back(Walls[5]);
+	Root->AddChild(Walls[5]);
+
+	Walls.push_back(new GameObject("Inner Center Wall", renderer, new Bitmap(renderer, "Assets/wall_vertical.png", true), _io, 40, 300, 505, 276, 0));
+	SceneObjects.push_back(Walls[6]);
+	Root->AddChild(Walls[6]);
+
+	Walls.push_back(new GameObject("Inner Right Top", renderer, new Bitmap(renderer, "Assets/wall_horizontal.png", true), _io, 400, 40, 665, 450, 0));
+	SceneObjects.push_back(Walls[7]);
+	Root->AddChild(Walls[7]);
+
 
 
 	
@@ -95,13 +135,43 @@ void Scene::Update()
 
 		}
 	}
-	if (Player->keyCollected == false)
+
+	for (auto obj : Collidables)
 	{
-		if (Player->collider->CheckCollision(Key))
+
+
+		if (obj->objectName == "Key")
 		{
-			
-			Player->keyCollected = true;
-			cout << "Key Collected\n";
+			if (Player->keyCollected == false)
+			{
+				if (Player->collider->CheckCollision(obj))
+				{
+					cout << "Collided with key\n";
+					EventManager->FireEvent(Event_Object_Collected, keyCollected);
+				}
+			}
+		}
+
+		if (obj->objectName == "Door")
+		{
+			if (Player->collider->CheckCollision(obj))
+			{
+				if (Player->keyCollected == true)
+				{
+					cout << "Collided with door\n";
+					
+				}
+			}
+		}
+		if (obj->objectName == "Creature")
+		{
+			if (Player->collider->CheckCollision(obj))
+			{
+				
+					cout << "Collided with enemy\n";
+					Player->transform->x = 40;
+					Player->transform->y = 40;
+			}
 		}
 	}
 	
@@ -114,7 +184,7 @@ void Scene::Update()
 			if (object->objectName != "Root")
 			{
 				object->UpdateGUI(*io);
-				object->Draw();
+				object->Update();
 			}
 			
 			
