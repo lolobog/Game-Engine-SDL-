@@ -168,38 +168,51 @@ public:
 
 	bool isClickingOn()
 	{
-		SDL_Rect rect;
-		rect.x = transform->x;
-		rect.y = transform->y;
-		rect.h = transform->h;
-		rect.w = transform->w;
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
 
-		SDL_Point point;
-		point.x = io->MousePos.x;
-		point.y = io->MousePos.y;
+			SDL_Rect rect;
+			rect.x = transform->x;
+			rect.y = transform->y;
+			rect.h = transform->h;
+			rect.w = transform->w;
 
-		
-		return (SDL_PointInRect(&point, &rect)&&io->MouseClicked[0]);
+			SDL_Point point;
+			point.x = io->MousePos.x;
+			point.y = io->MousePos.y;
+
+
+			return (SDL_PointInRect(&point, &rect) && io->MouseClicked[0]);
+		}
+		else
+			return false;
 	}
 
 	 void DrawGUI() override
 	{
-		ImGui::Begin(objectName.c_str());
+		 ImVec2 windowSize = ImVec2(200, 100);
+		 ImGui::SetNextWindowSize(windowSize, 0);
+		
+			 ImGui::Begin(objectName.c_str());
 
-		ImGui::InputFloat("X", transform->getXAddr(), 0.1f, 1.0f, "%.3f");
+			 ImGui::InputFloat("X", transform->getXAddr(), 0.1f, 1.0f, "%.3f");
 
-		ImGui::InputFloat("Y", transform->getYAddr(), 0.1f, 1.0f, "%.3f");
+			 ImGui::InputFloat("Y", transform->getYAddr(), 0.1f, 1.0f, "%.3f");
 
-		ImGui::End();
+			 ImGui::End();
+		 
 	}
 	
 	 void MouseHeld(ImGuiIO& io) override
 	 {
-		 if (I_GUI::ObjectTargeted==this)
+		 if (!ImGui::GetIO().WantCaptureMouse)
 		 {
-			 transform->x += io.MouseDelta.x;
-			 transform->y += io.MouseDelta.y;
+			 if (I_GUI::ObjectTargeted == this)
+			 {
+				 transform->x += io.MouseDelta.x;
+				 transform->y += io.MouseDelta.y;
 
+			 }
 		 }
 	 }
 
@@ -207,53 +220,54 @@ public:
 	 void DrawChildGUI()
 	 {
 		 
-		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
-		bool isOpen = ImGui::TreeNodeEx(this->objectName.c_str(), nodeFlags);
+			 ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
+			 bool isOpen = ImGui::TreeNodeEx(this->objectName.c_str(), nodeFlags);
+	    
+			 if (ImGui::IsItemClicked())
+			 {
+				 I_GUI::EditorToShow = this;
+				 std::cout << "selected object is: " << static_cast<GameObject*>(I_GUI::EditorToShow)->objectName << std::endl;
+			 }
+			 if (I_GUI::EditorToShow == this && ImGui::BeginDragDropSource())
+			 {
+				 ImGui::SetDragDropPayload("_TREENODE", this, sizeof(GameObject*));
+				 ImGui::Text("This is a drag and drop source");
+				 ImGui::EndDragDropSource();
+			 }
+			 if (ImGui::BeginDragDropTarget())
+			 {
+				 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
+				 {
+					 GameObject* PayloadAsGameObject = static_cast<GameObject*>(I_GUI::EditorToShow);
+					 std::cout << PayloadAsGameObject->objectName << " on top of " << this->objectName << std::endl;
 
-		if (ImGui::IsItemClicked())
-		{
-			I_GUI::EditorToShow = this;
-			std::cout << "selected object is: "<<static_cast<GameObject*>(I_GUI::EditorToShow)->objectName << std::endl;
-		}
-		if (I_GUI::EditorToShow == this && ImGui::BeginDragDropSource())
-		{
-			ImGui::SetDragDropPayload("_TREENODE", this, sizeof(GameObject*));
-			ImGui::Text("This is a drag and drop source");
-			ImGui::EndDragDropSource();
-		}
-		if (ImGui::BeginDragDropTarget())
-		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
-			{
-				GameObject* PayloadAsGameObject = static_cast<GameObject*>(I_GUI::EditorToShow);
-				std::cout << PayloadAsGameObject->objectName << " on top of " << this->objectName << std::endl;
-
-				PayloadAsGameObject->SetParent(this);
-			}
-			ImGui::EndDragDropTarget();
-		}
-
-
+					 PayloadAsGameObject->SetParent(this);
+				 }
+				 ImGui::EndDragDropTarget();
+			 }
 
 
 
 
 
 
-		
-		if (isOpen)
-		{
 
-			for (GameObject* child : children)
-			{
 
-				child->DrawChildGUI();
 
-			}
-			ImGui::TreePop();
 
-		}
-		
+			 if (isOpen)
+			 {
+
+				 for (GameObject* child : children)
+				 {
+
+					 child->DrawChildGUI();
+
+				 }
+				 ImGui::TreePop();
+
+			 }
+
+		  
 	 }
-
 };

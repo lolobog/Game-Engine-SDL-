@@ -24,7 +24,7 @@ class Scene
 
 		
 private:
-		GameObject* Root;
+		
 public:
 	SDL_Renderer* m_rednerere;
 	vector <GameObject*> SceneObjects;
@@ -38,7 +38,7 @@ public:
 	GameObject* Key;
 	GameObject* Door;
 	ImGuiIO* io = nullptr;
-	
+	GameObject* Root;
 
 	GameObject* GetRoot()
 	{

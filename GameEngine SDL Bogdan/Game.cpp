@@ -146,6 +146,7 @@ void Game::Update(void)
 		}
 		if (showGui == true)
 		{
+			
 			//ImGui::ShowDemoWindow(nullptr);
 			{
 				PROFILE("ASSETS GRABBING");
@@ -186,7 +187,7 @@ void Game::Update(void)
 				PROFILE("GO HIERARCHY");
 
 
-				ImGui::Begin("GameObjects", 0, ImGuiWindowFlags_NoMove);
+				ImGui::Begin("GameObjects", 0, 2|4);
 				ImGui::SetWindowPos({ 0,menuHeight });
 				ImGui::SetWindowSize({ 150,screenHeight - menuHeight });
 
@@ -232,7 +233,7 @@ void Game::Update(void)
 
 
 
-					GameObject* obj = new GameObject(AssetMouseDrag->GetFileName(), m_Renderer, AssetMouseDrag, *scene->io, 100, 100, x, y, 0);
+					GameObject* obj = new GameObject(AssetMouseDrag->GetFileName(), m_Renderer, AssetMouseDrag, *sManager.getInstance().currentScene->io, 100, 100, x, y, 0);
 					sManager.getInstance().currentScene->SceneObjects.push_back(obj);
 					sManager.getInstance().currentScene->GetRoot()->AddChild(obj);
 
@@ -243,7 +244,7 @@ void Game::Update(void)
 
 			{ PROFILE("CONTENT WINDOW");
 
-			ImGui::Begin("Content Window");
+			ImGui::Begin("Content Window",0, 2 | 4);
 
 			for (int i = 0; i < content.size(); i++)
 			{
@@ -274,7 +275,7 @@ void Game::Update(void)
 			{
 				PROFILE("PROFILER WINDOW");
 				//Profiler Window
-				ImGui::Begin("Profiler");
+				ImGui::Begin("Profiler",0, 2 | 4);
 
 				ImGui::PlotLines("Frames", m_timer.FrameTimeQueue.data(), m_timer.capacity);
 				char buffer[64];
@@ -292,7 +293,7 @@ void Game::Update(void)
 			//Flame Graph
 			{
 				PROFILE("FLAME GRAPH");
-				ImGui::Begin("Flame Graph");
+				ImGui::Begin("Flame Graph",0, 2 | 4);
 
 				vector<Sample*> Snapshot;
 				vector<Sample*> temp;
@@ -443,6 +444,7 @@ void Game::Update(void)
 
 					TotalBlockWidthSoFar += ThisBlockWidth;
 				}
+
 				drawlist->PopClipRect();
 
 
@@ -453,6 +455,7 @@ void Game::Update(void)
 
 			}
 		}
+	
 
 
 

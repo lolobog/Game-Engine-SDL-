@@ -30,7 +30,7 @@ private:
 	bool m_running;
 	Input PlayerInput;
 	FrameTimer m_timer;
-	int count = 0;
+	int count = 119;
 	vector<Bitmap*> content;
 	int numberOfImages = 0;
 	float screenHeight = 720;

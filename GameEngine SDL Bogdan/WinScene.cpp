@@ -5,6 +5,9 @@ WinScene::WinScene(SDL_Renderer* renderer, ImGuiIO& _io)
 {
 	io = &_io;
 	m_rednerere = renderer;
+
+	Root = new GameObject("Root", renderer, _io, 0, 0, 0, 0, 0);
+	SceneObjects.push_back(Root);
 }
 
 WinScene::~WinScene()
