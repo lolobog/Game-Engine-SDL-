@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
 {
 	Game* game = new Game();
 	Input* input = new Input();
-	
+	SceneManager sceneM;
 	
 	
 
@@ -23,17 +23,23 @@ int main(int argc, char* argv[])
 		{
 			
 			input->Update();
-			if (input->KeyIsPressed(KEY_W))
-				game->scene->Player->setY(game->scene->Player->getPosition().y - 10);
-			if (input->KeyIsPressed(KEY_S))
-				game->scene->Player->setY(game->scene->Player->getPosition().y + 10);
-			if (input->KeyIsPressed(KEY_A))
-				game->scene->Player->setX(game->scene->Player->getPosition().x - 10);
-			if (input->KeyIsPressed(KEY_D))
-				game->scene->Player->setX(game->scene->Player->getPosition().x + 10);
+			if (sceneM.getInstance().currentScene != nullptr)
+			{
+				if (sceneM.getInstance().currentScene->Player != nullptr)
+				{
+					if (input->KeyIsPressed(KEY_W))
+						sceneM.getInstance().currentScene->Player->setY(sceneM.getInstance().currentScene->Player->getPosition().y - 10);
+					if (input->KeyIsPressed(KEY_S))
+						sceneM.getInstance().currentScene->Player->setY(sceneM.getInstance().currentScene->Player->getPosition().y + 10);
+					if (input->KeyIsPressed(KEY_A))
+						sceneM.getInstance().currentScene->Player->setX(sceneM.getInstance().currentScene->Player->getPosition().x - 10);
+					if (input->KeyIsPressed(KEY_D))
+						sceneM.getInstance().currentScene->Player->setX(sceneM.getInstance().currentScene->Player->getPosition().x + 10);
+				}
+			}
 			if (input->KeyIsPressed(KEY_G))
 					game->showGui = false;
-			if(input->KeyIsPressed(KEY_R))
+			if (input->KeyIsPressed(KEY_R))
 				game->showGui = true;
 				
 					

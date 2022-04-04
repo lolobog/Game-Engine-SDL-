@@ -1,29 +1,27 @@
-//#pragma once
-//#include "Scene.h"
-//
-//class SceneManager
-//{
-//    
-//private:
-//   
-//
-//    Scene currScene;
-//
-//        
-//public:
-//    /*static SceneManager* getInstance()
-//        {
-//        SceneManager* instance;
-//        if (instance == nullptr)
-//            instance = new SceneManager();
-//        return instance;
-//        }*/
-//
-//    void update() { currScene.Update(); };
-//    //void redraw() { currScene.Redraw(); };
-//
-//        
-//    
-//    
-//};
+#include "Scene.h"
+
+
+
+typedef std::map<std::string, std::vector<Scene*>> scenesMap;
+
+class SceneManager
+{
+public:
+	Scene* currentScene=nullptr;
+	scenesMap gameScenes;
+
+	SceneManager();
+	~SceneManager();
+	void AddScene(std::string sceneName,Scene* scene);
+	void UpdateScene();
+	void ChangeScene(std::string sceneName);
+	static SceneManager& getInstance()
+	{
+		static SceneManager    instance; // Guaranteed to be destroyed.
+							  // Instantiated on first use.
+		return instance;
+	}
+
+};
+
 

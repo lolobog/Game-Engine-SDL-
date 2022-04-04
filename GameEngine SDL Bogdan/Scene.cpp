@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "SceneManager.h"
 
 Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 {
@@ -97,9 +98,13 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	
 }
 
+Scene::Scene()
+{
+}
+
 void Scene::Update()
 {
-	
+	SceneManager sManager;
 
 
 	for (auto obj : Walls)
@@ -158,6 +163,8 @@ void Scene::Update()
 			{
 				if (Player->keyCollected == true)
 				{
+					ResetLevel();
+					sManager.getInstance().ChangeScene("Win");
 					cout << "Collided with door\n";
 					
 				}
@@ -167,7 +174,7 @@ void Scene::Update()
 		{
 			if (Player->collider->CheckCollision(obj))
 			{
-				
+				ResetLevel();
 					cout << "Collided with enemy\n";
 					Player->transform->x = 40;
 					Player->transform->y = 40;

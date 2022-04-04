@@ -79,9 +79,10 @@ Game::Game()
  m_pSmallFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 15);
  m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 50);
 
-
-	scene = new Scene(m_Renderer,io);
 	
+	sManager.getInstance().AddScene("Menu", new MenuScene(m_Renderer, io));
+	sManager.getInstance().AddScene("Game", new Scene(m_Renderer, io));
+	sManager.getInstance().AddScene("Win", new WinScene(m_Renderer, io));
 	
 
 }///
@@ -140,7 +141,7 @@ void Game::Update(void)
 		bool show = true;
 		{
 			PROFILE("SCENE UPDATE");
-			scene->Update();
+			sManager.getInstance().currentScene->Update();
 
 		}
 		if (showGui == true)
@@ -190,7 +191,7 @@ void Game::Update(void)
 				ImGui::SetWindowSize({ 150,screenHeight - menuHeight });
 
 				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
-				GameObject* Root = scene->GetRoot();
+				GameObject* Root = sManager.getInstance().currentScene->GetRoot();
 				bool isNodeOpen = ImGui::TreeNodeEx(Root->objectName.c_str(), nodeFlags);
 				if (ImGui::BeginDragDropTarget())
 				{
@@ -232,8 +233,8 @@ void Game::Update(void)
 
 
 					GameObject* obj = new GameObject(AssetMouseDrag->GetFileName(), m_Renderer, AssetMouseDrag, *scene->io, 100, 100, x, y, 0);
-					scene->SceneObjects.push_back(obj);
-					scene->GetRoot()->AddChild(obj);
+					sManager.getInstance().currentScene->SceneObjects.push_back(obj);
+					sManager.getInstance().currentScene->GetRoot()->AddChild(obj);
 
 					AssetMouseDrag = nullptr;
 				}
@@ -358,7 +359,7 @@ void Game::Update(void)
 					}
 
 					ImRect rect = { ImGui::GetItemRectMin(),ImGui::GetItemRectMax() };
-					if (rect.Contains(scene->io->MousePos))
+					if (rect.Contains(sManager.getInstance().currentScene->io->MousePos))
 					{
 						if (ImGui::IsMouseClicked(ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
 						{

@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 #include "GameObject.h"
 #include "hero.h"
 #include "creature.h"
@@ -20,11 +21,12 @@ enum Layers
 
 class Scene
 {
-private:
-		SDL_Renderer* m_rednerere;
+
 		
+private:
 		GameObject* Root;
 public:
+	SDL_Renderer* m_rednerere;
 	vector <GameObject*> SceneObjects;
 	vector <GameObject*> Walls;
 	vector <GameObject*> Collidables;
@@ -32,7 +34,7 @@ public:
 	//vector <vector <GameObject*>> LayerObjects;
 	EventManger* EventManager = new EventManger();
 	CollectionEvent* keyCollected= new CollectionEvent();
-	Hero* Player;
+	Hero* Player=nullptr;
 	GameObject* Key;
 	GameObject* Door;
 	ImGuiIO* io = nullptr;
@@ -42,15 +44,22 @@ public:
 	{
 		return Root;
 	}
-	Scene(SDL_Renderer *renderer, ImGuiIO& io);
-
-	//vector<vector<GameObject*>> GetGameObjects()
-	//{
-	//	return LayerObjects;
-	//}
+	void ResetLevel()
+	{
+		Player->transform->x = 40;
+		Player->transform->y = 40;
+		Player->keyCollected = false;
+		Key->transform->w = 70;
+		Key->transform->h = 70;
+		Key->transform->x = 862;
+		Key->transform->y = 505;
+	}
+	Scene(SDL_Renderer *renderer, ImGuiIO& _io);
+	Scene();
+	
 	
 
 
-	void Update();
+	virtual void Update();
 	
 };
