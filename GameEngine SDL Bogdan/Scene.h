@@ -4,6 +4,7 @@
 #include "hero.h"
 #include "creature.h"
 #include <vector>
+#include "AudioSystem.h"
 
 
 using namespace std;
@@ -32,6 +33,7 @@ public:
 	vector <GameObject*> Collidables;
 	vector <Creature*>CreatureAIs;
 	//vector <vector <GameObject*>> LayerObjects;
+	AudioSystem audioManager;
 	EventManger* EventManager = new EventManger();
 	CollectionEvent* keyCollected= new CollectionEvent();
 	Hero* Player=nullptr;

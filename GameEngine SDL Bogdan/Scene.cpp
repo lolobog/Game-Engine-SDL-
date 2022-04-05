@@ -19,7 +19,7 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	SceneObjects.push_back(Root);
 	
 
-	SceneObjects.push_back(new Creature(renderer, new Bitmap(renderer, "Assets/goomba.png", true), _io, 60, 60, 833, 157, 0));
+	SceneObjects.push_back(new Creature(renderer, new Bitmap(renderer, "Assets/goomba.png", true), _io, 60, 60, 801, 157, 0));
 	SceneObjects[1]->SetParent(Root);
 	CreatureAIs.push_back((Creature*)SceneObjects[1]);
 	CreatureAIs[0]->target1 = 50; CreatureAIs[0]->target2 = 370;
@@ -37,7 +37,13 @@ Scene::Scene(SDL_Renderer* renderer, ImGuiIO& _io)
 	CreatureAIs[2]->target1 = 180; CreatureAIs[2]->target2 = 500;
 	Collidables.push_back(CreatureAIs[2]);
 
+	SceneObjects.push_back(new Creature(renderer, new Bitmap(renderer, "Assets/goomba.png", true), _io, 60, 60, 82, 325, 0));
+	SceneObjects[4]->SetParent(Root);
+	CreatureAIs.push_back((Creature*)SceneObjects[4]);
+	CreatureAIs[3]->target1 = 550; CreatureAIs[3]->target2 = 200;
+	Collidables.push_back(CreatureAIs[3]);
 
+	
 	Player = new Hero(renderer, new Bitmap(renderer, "Assets/hero.bmp", true), _io, 80, 80, 40, 40, 0);
 	Root->AddChild(Player);
 	SceneObjects.push_back(Player);
@@ -151,6 +157,7 @@ void Scene::Update()
 			{
 				if (Player->collider->CheckCollision(obj))
 				{
+					Mix_PlayChannel(-1,audioManager.getInstance().keySound, 0);
 					cout << "Collided with key\n";
 					EventManager->FireEvent(Event_Object_Collected, keyCollected);
 				}
@@ -165,6 +172,8 @@ void Scene::Update()
 				{
 					ResetLevel();
 					sManager.getInstance().ChangeScene("Win");
+					Mix_HaltMusic();
+					Mix_PlayMusic(audioManager.getInstance().winMusic, -1);
 					cout << "Collided with door\n";
 					
 				}
@@ -175,6 +184,7 @@ void Scene::Update()
 			if (Player->collider->CheckCollision(obj))
 			{
 				ResetLevel();
+					Mix_PlayChannel(-1, audioManager.getInstance().monsterHit, 0);
 					cout << "Collided with enemy\n";
 					Player->transform->x = 40;
 					Player->transform->y = 40;
@@ -190,6 +200,7 @@ void Scene::Update()
 		{
 			if (object->objectName != "Root")
 			{
+				
 				object->UpdateGUI(*io);
 				object->Update();
 			}
@@ -199,7 +210,8 @@ void Scene::Update()
 	
 
 	if (I_GUI::EditorToShow)
-		I_GUI::EditorToShow->DrawGUI();
+		if(sManager.getInstance().showGUI==true)
+		  I_GUI::EditorToShow->DrawGUI();
 	
 	
 }

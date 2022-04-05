@@ -1,0 +1,6 @@
+hurtSound: https://freesound.org/people/cabled_mess/sounds/350921/
+keyCollect: https://freesound.org/people/bradwesson/sounds/135936/
+gameMusic: https://freesound.org/people/Mrthenoronha/sounds/523725/
+menuMusic: https://freesound.org/people/Mrthenoronha/sounds/520937/
+winMusic: https://freesound.org/people/Mrthenoronha/sounds/518305/
+buttonClick: https://freesound.org/people/Greenhourglass/sounds/159376/

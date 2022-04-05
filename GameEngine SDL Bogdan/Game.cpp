@@ -56,6 +56,13 @@ Game::Game()
 		//success = false;
 	}
 
+	//Initialize SDL_mixer
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		//success = false;
+	}
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	SDL_DisplayMode DisplayMode;
@@ -138,13 +145,21 @@ void Game::Update(void)
 		
 		ImGui::NewFrame();
 		ImGui_ImplSDL2_NewFrame(m_Window);
-		bool show = true;
+		ImGui::Begin("Show/Hide ImGui", 0,  2|8 | 16 | 32 | 128);
+		if (ImGui::Button("Show/Hide ImGui"))
+		{
+			if (sManager.getInstance().showGUI== true)
+				sManager.getInstance().showGUI = false;
+			else
+				sManager.getInstance().showGUI = true;
+		}
+		ImGui::End();
 		{
 			PROFILE("SCENE UPDATE");
 			sManager.getInstance().currentScene->Update();
 
 		}
-		if (showGui == true)
+		if (sManager.getInstance().showGUI == true)
 		{
 			
 			//ImGui::ShowDemoWindow(nullptr);
@@ -187,9 +202,8 @@ void Game::Update(void)
 				PROFILE("GO HIERARCHY");
 
 
-				ImGui::Begin("GameObjects", 0, 2|4);
-				ImGui::SetWindowPos({ 0,menuHeight });
-				ImGui::SetWindowSize({ 150,screenHeight - menuHeight });
+				ImGui::Begin("GameObjects");
+				
 
 				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen;
 				GameObject* Root = sManager.getInstance().currentScene->GetRoot();
@@ -244,7 +258,7 @@ void Game::Update(void)
 
 			{ PROFILE("CONTENT WINDOW");
 
-			ImGui::Begin("Content Window",0, 2 | 4);
+			ImGui::Begin("Content Window",0, 2 );
 
 			for (int i = 0; i < content.size(); i++)
 			{
@@ -275,7 +289,7 @@ void Game::Update(void)
 			{
 				PROFILE("PROFILER WINDOW");
 				//Profiler Window
-				ImGui::Begin("Profiler",0, 2 | 4);
+				ImGui::Begin("Profiler",0, 2 );
 
 				ImGui::PlotLines("Frames", m_timer.FrameTimeQueue.data(), m_timer.capacity);
 				char buffer[64];
@@ -293,7 +307,7 @@ void Game::Update(void)
 			//Flame Graph
 			{
 				PROFILE("FLAME GRAPH");
-				ImGui::Begin("Flame Graph",0, 2 | 4);
+				ImGui::Begin("Flame Graph",0, 2 );
 
 				vector<Sample*> Snapshot;
 				vector<Sample*> temp;

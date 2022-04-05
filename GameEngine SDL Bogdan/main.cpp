@@ -37,10 +37,7 @@ int main(int argc, char* argv[])
 						sceneM.getInstance().currentScene->Player->setX(sceneM.getInstance().currentScene->Player->getPosition().x + 10);
 				}
 			}
-			if (input->KeyIsPressed(KEY_G))
-					game->showGui = false;
-			if (input->KeyIsPressed(KEY_R))
-				game->showGui = true;
+			
 				
 					
 

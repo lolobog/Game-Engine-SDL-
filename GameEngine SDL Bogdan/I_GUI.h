@@ -14,7 +14,8 @@ public:
 
 	static I_GUI* ObjectTargeted;
 
-
+	
+	
 
 	
 

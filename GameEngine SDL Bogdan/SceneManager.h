@@ -9,7 +9,7 @@ class SceneManager
 public:
 	Scene* currentScene=nullptr;
 	scenesMap gameScenes;
-
+	bool showGUI = false;
 	SceneManager();
 	~SceneManager();
 	void AddScene(std::string sceneName,Scene* scene);

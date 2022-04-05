@@ -9,8 +9,10 @@ MenuScene::MenuScene(SDL_Renderer* renderer, ImGuiIO& _io)
 	Root = new GameObject("Root", renderer, _io, 0, 0, 0, 0, 0);
 	SceneObjects.push_back(Root);
 
-	
-
+	audioManager.getInstance().loadAudio();
+	Mix_PlayMusic(audioManager.getInstance().menuMusic, -1);
+	Mix_VolumeMusic(20);
+	Mix_VolumeChunk(audioManager.getInstance().buttonClick, 10);
 }
 
 MenuScene::~MenuScene()
@@ -32,11 +34,17 @@ void MenuScene::Update()
 	ImGui::SetWindowFontScale(10);
 		if (ImGui::Button("Play", buttonSize))
 		{
-			
+			Mix_HaltMusic();
+			Mix_PlayChannel(-1, audioManager.getInstance().buttonClick, 0);
+			Mix_PlayMusic(audioManager.getInstance().gameMusic, -1);
+			Mix_VolumeMusic(10);
 			sceneMan.getInstance().ChangeScene("Game");
 		}
 		if (ImGui::Button("Quit", buttonSize))
 		{
+			Mix_HaltMusic();
+			Mix_PlayChannel(-1, audioManager.getInstance().buttonClick, 0);
+			audioManager.getInstance().Close();
 			SDL_Quit();
 			exit(0);
 		}

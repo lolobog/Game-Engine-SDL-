@@ -190,9 +190,10 @@ public:
 
 	 void DrawGUI() override
 	{
-		 ImVec2 windowSize = ImVec2(200, 100);
-		 ImGui::SetNextWindowSize(windowSize, 0);
-		
+		 
+			 ImVec2 windowSize = ImVec2(200, 100);
+			 ImGui::SetNextWindowSize(windowSize, 0);
+
 			 ImGui::Begin(objectName.c_str());
 
 			 ImGui::InputFloat("X", transform->getXAddr(), 0.1f, 1.0f, "%.3f");
@@ -200,6 +201,7 @@ public:
 			 ImGui::InputFloat("Y", transform->getYAddr(), 0.1f, 1.0f, "%.3f");
 
 			 ImGui::End();
+		 
 		 
 	}
 	

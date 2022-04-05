@@ -29,11 +29,16 @@ void WinScene::Update()
 	ImGui::SetWindowFontScale(10);
 	if (ImGui::Button("Play Again?", buttonSize))
 	{
-
+		Mix_HaltMusic();
+		Mix_PlayMusic(audioManager.getInstance().gameMusic, -1); 
+		Mix_PlayChannel(-1, audioManager.getInstance().buttonClick, 0);
 		sceneMan.getInstance().ChangeScene("Game");
 	}
 	if (ImGui::Button("Quit", buttonSize))
 	{
+		Mix_HaltMusic();
+		Mix_PlayChannel(-1, audioManager.getInstance().buttonClick, 0);
+		audioManager.getInstance().Close();
 		SDL_Quit();
 		exit(0);
 	}

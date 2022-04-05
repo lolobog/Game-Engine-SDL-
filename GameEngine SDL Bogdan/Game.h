@@ -19,6 +19,7 @@
 #include "../SDL2_image-2.0.5/include/SDL_image.h"
 #include "Profiler.h"
 
+
 using namespace std;
 
 class Game
@@ -42,7 +43,7 @@ private:
 	
 
 public:
-	bool showGui = false;
+	
 	Game();
 	~Game();
 	SceneManager sManager;
