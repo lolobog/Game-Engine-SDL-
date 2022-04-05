@@ -38,7 +38,9 @@ private:
 	float screenWidth = 960;
 	float menuHeight = 10;
 	Bitmap* AssetMouseDrag;
-	
+	vector<Sample*> Snapshot;
+	Sample* previousFrame;
+	Sample* targetFrame;
 	
 	
 

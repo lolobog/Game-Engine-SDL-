@@ -23,14 +23,13 @@ void MenuScene::Update()
 {
 	SceneManager sceneMan;
 	
-	ImVec2 buttonSize = ImVec2(700, 300);
+	
+	
+	
+	
 
-	
-	
-	
-
-	ImGui::Begin("Main Menu Window",0,1|2|4|8|16|32|128);
-	
+	ImGui::Begin("Main Menu Window", 0, 1 | 2 | 4 | 8 | 16 | 32 | 128);
+	ImGui::SetWindowPos(MenuPos,0);
 	ImGui::SetWindowFontScale(10);
 		if (ImGui::Button("Play", buttonSize))
 		{
@@ -50,5 +49,22 @@ void MenuScene::Update()
 		}
 		
 	ImGui::End();
+
+	for (auto object : SceneObjects)
+	{
+		if (object->objectName != "Root")
+		{
+
+			object->UpdateGUI(*io);
+			object->Update();
+		}
+
+
+	}
+
+
+	if (I_GUI::EditorToShow)
+		if (sceneMan.getInstance().showGUI == true)
+			I_GUI::EditorToShow->DrawGUI();
 	
 }

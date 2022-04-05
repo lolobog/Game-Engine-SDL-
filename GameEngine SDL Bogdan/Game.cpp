@@ -90,6 +90,8 @@ Game::Game()
 	sManager.getInstance().AddScene("Menu", new MenuScene(m_Renderer, io));
 	sManager.getInstance().AddScene("Game", new Scene(m_Renderer, io));
 	sManager.getInstance().AddScene("Win", new WinScene(m_Renderer, io));
+
+	
 	
 
 }///
@@ -307,9 +309,9 @@ void Game::Update(void)
 			//Flame Graph
 			{
 				PROFILE("FLAME GRAPH");
-				ImGui::Begin("Flame Graph",0, 2 );
+				ImGui::Begin("Flame Graph",0, 0 );
 
-				vector<Sample*> Snapshot;
+				
 				vector<Sample*> temp;
 				vector<float> FrameTimes;
 
@@ -326,15 +328,16 @@ void Game::Update(void)
 					{
 						FrameTimes.push_back(profile->functionTime);
 					}
+					targetFrame = g_profileManager.GetFrameData().back();
 				}
 				int selectedFrame = Snapshot.size();
 				ImGui::SameLine();
 
-				static	bool LiveFlameGraph = false;
+				static	bool LiveFlameGraph = true;
 				ImGui::Checkbox("Live Flame Graph", &LiveFlameGraph);
 				if (LiveFlameGraph)
 				{
-					selectedFrame = -1;
+					selectedFrame = Snapshot.size() -1;
 				}
 
 				//nasty HACK!!!!
@@ -384,18 +387,14 @@ void Game::Update(void)
 
 				}
 
-				Sample* previousFrame = g_profileManager.GetFrameData().back();
-
-				/*if (!LiveFlameGraph && selectedFrame != -1)
-				{
-
-					previousFrame->CopyInfo(g_profileManager.GetFrameData()[g_profileManager.GetFrameData().size() - 1]);
-				}
+				if (LiveFlameGraph)
+					previousFrame = g_profileManager.GetFrameData().back();
 				else
-				{
-					LiveFlameGraph = false;
-				}*/
+					previousFrame = targetFrame;
 
+				
+				
+				
 				ImGui::LabelText("Frame Date Count", std::to_string(Snapshot.size()).c_str());
 				ImDrawList* drawlist = ImGui::GetCurrentWindow()->DrawList;
 				ImVec2 canvas_p0 = ImGui::GetCursorScreenPos();

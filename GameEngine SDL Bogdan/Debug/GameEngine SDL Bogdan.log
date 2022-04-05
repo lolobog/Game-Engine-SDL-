@@ -1,4 +1,5 @@
-﻿  Scene.cpp
+﻿  Game.cpp
+D:\Tutorial-5\GameEngine SDL Bogdan\MenuScene.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(95,22): warning C4018: '<': signed/unsigned mismatch
 D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(175,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(176,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
@@ -7,4 +8,34 @@ D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(178,22): warning C4244: '=': co
 D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(181,26): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\Tutorial-5\GameEngine SDL Bogdan\GameObject.h(182,26): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\Tutorial-5\GameEngine SDL Bogdan\input.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(9,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Tutorial-5\GameEngine SDL Bogdan\FrameTimer.h(37,21): warning C4018: '<': signed/unsigned mismatch
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(22,3): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(21,3): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(30,10): warning C4473: 'printf' : not enough arguments passed for format string
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(30,10): message : placeholders and their parameters expect 1 variadic arguments, but 0 were provided
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(30,10): message : the missing variadic argument 1 is required by format string '%s'
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(44,10): warning C4473: 'printf' : not enough arguments passed for format string
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(44,10): message : placeholders and their parameters expect 1 variadic arguments, but 0 were provided
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(44,10): message : the missing variadic argument 1 is required by format string '%s'
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(139,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(252,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(252,150): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(265,22): warning C4018: '<': signed/unsigned mismatch
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(329,35): warning C4244: 'argument': conversion from '__int64' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(344,67): warning C4838: conversion from 'unsigned int' to 'int' requires a narrowing conversion
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(360,25): warning C4244: 'argument': conversion from '__int64' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Tutorial-5\GameEngine SDL Bogdan\Game.cpp(423,23): warning C4018: '<': signed/unsigned mismatch
   GameEngine SDL Bogdan.vcxproj -> D:\Tutorial-5\Debug\GameEngine SDL Bogdan.exe

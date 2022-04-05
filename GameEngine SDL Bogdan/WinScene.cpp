@@ -44,4 +44,22 @@ void WinScene::Update()
 	}
 
 	ImGui::End();
+
+	for (auto object : SceneObjects)
+	{
+		if (object->objectName != "Root")
+		{
+
+			object->UpdateGUI(*io);
+			object->Update();
+		}
+
+
+	}
+
+
+	if (I_GUI::EditorToShow)
+		if (sceneMan.getInstance().showGUI == true)
+			I_GUI::EditorToShow->DrawGUI();
+
 }
