@@ -170,7 +170,6 @@
     <ClCompile Include="Resource_Manager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
@@ -181,7 +180,6 @@
     <ClInclude Include="Debugging.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
-    <ClInclude Include="Flamegraph.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -204,7 +202,6 @@
     <ClInclude Include="Resource_Manager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="WinScene.h" />
   </ItemGroup>

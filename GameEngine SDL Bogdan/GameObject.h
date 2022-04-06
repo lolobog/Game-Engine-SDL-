@@ -3,7 +3,6 @@
 #include "Vector2D.h"
 #include "bitmap.h"
 #include "EventManager.h"
-#include <Box2D.h>
 #include "imgui-master/imgui.h"
 #include "imgui-master/backends/imgui_impl_sdl.h"
 #include "imgui_sdl-master/imgui_sdl.h"
@@ -12,23 +11,29 @@
 #include <iostream>
 #include "Physics.h"
 
+
 struct Transform 
 {
 public :
-	float w, h, x, y, z;
 
+	float w, h, x, y, z;
+	/**
+*  Reference to the position on the X axis 
+*/
 	float* getXAddr()
 	{
 		return &x;
 	}
+	/**
+*  Reference to the position on the Y axis
+*/
 	float* getYAddr()
 	{
 		return &y;
 	}
-
-	//Vector2D position;
-	Vector2D velocity;
-
+	/**
+*  Default constructor for the Transform structure
+*/
 	Transform() {
 		this->w = 100;
 		this->h = 100;
@@ -36,7 +41,9 @@ public :
 		this->y = 0;
 		this->z = 0;
 	}
-
+	/**
+*  Constructor that takes the desired width,height and position on the X,Y,Z
+*/
 	Transform(float w, float h, float x, float y, float z)
 	{
 		this->w = w;
@@ -50,30 +57,46 @@ public :
 
 };
 
-
+/**
+*  Game Object Class
+*/
 class GameObject: public IEventHandler, public I_GUI
 {
 	
 	
 
 private:
+	/**
+*  SDL renderer variable representing the renderer used by the Game Object
+*/
 	SDL_Renderer* m_Renderer;
 	
 
 protected:
+	/**
+*  ImGuiIO variable which will be passed to all inheriting classes
+*/
 	ImGuiIO* io;
 	
 public:
+	/**
+*  Physics collider of the Game Object
+*/
 	Physics* collider = new Physics(this);
-	std::vector<std::string> Tags;
+	/**
+*  Reference to the image used by the Game Object
+*/
 	Bitmap* m_bitmap;
+	/**
+*  Transform of the Game Object
+*/
 	Transform* transform;
+	/**
+*  Name of the Game Object
+*/
 	std::string objectName;
+
 	GameObject(std::string _objectName,SDL_Renderer* renderer,Bitmap* bitmap,ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
-
-	//GameObject(std::string _objectName, SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io, float _x, float _y, float _z = 0);
-
-	//GameObject(std::string _objectName, SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io);
 
 	GameObject(std::string _objectName, SDL_Renderer* renderer,  ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
 	
@@ -84,10 +107,18 @@ public:
 	
 
 	//Hierarchy
+	/**
+*  Reference to the parent of the Game Object
+*/
 	GameObject* parent = nullptr;
+	/**
+*  Vector containing the children of the Game Object
+*/
 	std::vector <GameObject*> children;
-	bool visited = false;
 
+	/**
+*  Remove a specific Game Object from the children vector
+*/
 	void RemoveChild(GameObject* obj)
 	{
 		if (obj->parent != nullptr)
@@ -102,7 +133,9 @@ public:
 		}
 	}
 
-
+	/**
+*  Set the parent of the Game Object
+*/
 	void SetParent(GameObject* obj) 
 	{ 
 		RemoveChild(this);
@@ -111,6 +144,9 @@ public:
 		this->parent = obj;
 		obj->children.push_back(this);
 	}
+	/**
+*  Add a Game Object to the children vector
+*/
 	void AddChild(GameObject* obj) 
 	{ 
 		RemoveChild(obj);
@@ -122,32 +158,52 @@ public:
 	};
 
 	
-
+	/**
+*  Return a refernce to the Game Object Transform
+*/
 	Transform* getTransform() 
 	{ 
 		return transform; 
 	}
-
+	/**
+*  Replace the current transform of the Game Object with the desired new one
+*/
 	void ChangeTransform(Transform* newTransform) 
 { 
 		transform = newTransform; 
 	}
-
+	/**
+*  Return the position of the Game Object
+*/
 	Vector2D getPosition() 
 	{
-		//return transform->position; 
 		return Vector2D(transform->x, transform->y);
 	}
-	
+	/**
+*  Set the position of the Game Object
+*/
 	void setPosition(Vector2D newPos);
+	/**
+*  Set the Y position of the Game Object
+*/
 	void setY(float y);
+	/**
+*  Set the X position of the Game Object
+*/
 	void setX(float x);
 	
-
+	/**
+*  Draw the Game Object and its children
+*/
 	void Draw();
-
+	/**
+*  Update the AI Logic
+*/
 	virtual void LogicUpdate();
 
+	/**
+* Triggers upon a specific event being fired
+*/
 	void OnEvent(Event* event)
 	{
 		this->transform->h = 0;
@@ -158,7 +214,9 @@ public:
 
 	}
 
-
+	/**
+* Draws the Game Object and Updates it's logic
+*/
 	virtual void Update()
 	{
 		Draw();
@@ -166,6 +224,9 @@ public:
 
 	}
 
+	/**
+* Checks if Game Object is being clicked on
+*/
 	bool isClickingOn()
 	{
 		if (!ImGui::GetIO().WantCaptureMouse)
@@ -187,7 +248,9 @@ public:
 		else
 			return false;
 	}
-
+	/**
+* Draw the GUI with the information of the Game Object
+*/
 	 void DrawGUI() override
 	{
 		 
@@ -204,7 +267,9 @@ public:
 		 
 		 
 	}
-	
+	 /**
+ * Changes the position of the Game Object to that of the mouse while left click is being held on the object
+ */
 	 void MouseHeld(ImGuiIO& io) override
 	 {
 		 if (!ImGui::GetIO().WantCaptureMouse)
@@ -218,7 +283,9 @@ public:
 		 }
 	 }
 
-
+	 /**
+* Add the Game Object's children to the Game Object hierarchy
+*/
 	 void DrawChildGUI()
 	 {
 		 

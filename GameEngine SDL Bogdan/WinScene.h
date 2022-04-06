@@ -6,7 +6,9 @@ class WinScene : public Scene
 public:
 	WinScene(SDL_Renderer* renderer, ImGuiIO& _io);
 	~WinScene();
-
+	/**
+* Update the Win Scene
+*/
 	void Update();
 
 private:

@@ -7,7 +7,9 @@
 #include <stack>
 
 using namespace std;
-
+/**
+* Structure that holds how long the function took and the number of the frame
+*/
 struct SampleData
 {
 	__int64 functionTime;
@@ -17,13 +19,24 @@ struct SampleData
 class Sample
 {
 private:
-	int profiles = 0;
+
 public:
+	/**
+* Name of the sample
+*/
 	string Name;
+	/**
+* Vector to store all the sub samples of a sample
+*/
 	vector<Sample*>SubSample;
+	/**
+* Time that the function took
+*/
 	__int64 functionTime;
 	
-	
+	/**
+* Copy the information from one sample to another
+*/
 	void CopyInfo(Sample* sample)
 	{
 		
@@ -32,18 +45,23 @@ public:
 		this->SubSample = sample->SubSample;
 	}
 
-	int GetNumberOfProfiles()
+	/**
+* Returns the number of sample(including the children)
+*/
+	int GetNumberOfSamples()
 	{
 		int count = 0;
 			for (auto sample : SubSample)
 			{
-				count+=1+sample->GetNumberOfProfiles();
+				count+=1+sample->GetNumberOfSamples();
 			}
 		
 		
 		return count;
 	}
-
+	/**
+* Add the new profiles to the vector of sub profiles
+*/
 	void PushProfiles(vector<Sample*> Snapshot)
 	{
 		Snapshot.push_back(this);
@@ -66,32 +84,76 @@ class ProfilerSystem
 public:
 	ProfilerSystem();
 	~ProfilerSystem();
-
+	/**
+* Mark the beginning of a new frame for the profiler to analyze
+*/
 	void startFrame();
+	/**
+* Store the time of a profile in the Stack
+*/
 	void storeSampleTime(__int64 elapsedTime);
+	/**
+* Store the name of a profile in the Stack
+*/
 	void storeSampleName(const char* name);
+	/**
+* Returns a reference to a map holding all the profiles
+*/
 	vector<Sample*> GetFrameData() { return frameData; }
+	/**
+* Mark the end of a new frame for the profiler to analyze
+*/
 	void endFrame();
 	
 	
 private:
-	int currentFrame = 0;
-	bool isMainLoopIn = false;
+	/**
+* Integer representing the number of the profiles to analyze
+*/
 	int numberOfProfiles = 0;
+	/**
+* Integer representing the number of the frame the application is on
+*/
+	int currentFrame = 0;
+	/**
+* Boolean to make sure the Main profile goes in first
+*/
+	bool isMainLoopIn = false;
+	/**
+* Vector containing all the profiles
+*/
 	vector <Sample*> frameData;
+	/**
+* Vector containing all the frame times
+*/
 	vector <float> frameTimes;
+	/**
+* Stack whose top is always the stack we are currently on
+*/
 	std::stack<Sample*> CurrentSample;
 	
 	
 };
-
+/**
+* Global Profile 
+* 
+*/
 static  ProfilerSystem g_profileManager;
 
 
 struct Profile
 {
+	/**
+* Name of the profile
+*/
 	const char* _name;
+	/**
+* Start time of the profile
+*/
 	std::clock_t startTime;
+	/**
+* End time of the profile
+*/
 	std::clock_t endTime;
 	
 	Profile(const char* name)

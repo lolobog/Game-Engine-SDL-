@@ -11,13 +11,7 @@ Hero::Hero(SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io, float _w, float
 	
 
 
-Hero::~Hero() {}
-
-void Hero::InputUpdate(Input input)
-{
-
-}
-;
+Hero::~Hero() {};
 
 
 

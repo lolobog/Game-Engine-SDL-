@@ -4,7 +4,9 @@
 #include <stdarg.h> 
 
 extern int g_verbosity;
-
+/**
+* Debug print function that allows formated output
+*/
 int VDebugPrintF(const char* format, va_list argList)
 {
 	const unsigned int MAX_CHARS = 1024;
@@ -16,7 +18,9 @@ int VDebugPrintF(const char* format, va_list argList)
 	return charsWritten;
 	
 }
-
+/**
+* Debug print function that allows formated output that does not require a variable argument list
+*/
 int DebugPrintF(const char* format)
 {
 	va_list argList;
@@ -28,6 +32,9 @@ int DebugPrintF(const char* format)
 
 	return charsWritten;
 }
+/**
+* Enumeration representing the verbosity levels of the VerboseDebugPrintF function
+*/
 enum Verbosity
 {
 	None,
@@ -36,7 +43,9 @@ enum Verbosity
 	Info,
 	All
 };
-
+/**
+* Debug print function that allows formated output taking verbosity levels
+*/
 int VerboseDebugPrintF(int verbosity, const char* format)
 {
 	if (g_verbosity < verbosity)

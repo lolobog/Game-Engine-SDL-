@@ -28,7 +28,7 @@ void MenuScene::Update()
 	
 	
 
-	ImGui::Begin("Main Menu Window", 0, 1 | 2 | 4 | 8 | 16 | 32 | 128);
+	ImGui::Begin("Main Menu Window", 0, 1 | 2 | 4 | 8 | 16 | 32 | 128| ImGuiWindowFlags_NoDocking);
 	ImGui::SetWindowPos(MenuPos,0);
 	ImGui::SetWindowFontScale(10);
 		if (ImGui::Button("Play", buttonSize))

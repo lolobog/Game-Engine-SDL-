@@ -24,7 +24,7 @@ void WinScene::Update()
 
 
 
-	ImGui::Begin("Win Screen Window", 0, 1 | 2 | 4 | 8 | 16 | 32 | 128);
+	ImGui::Begin("Win Screen Window", 0, 1 | 2 | 4 | 8 | 16 | 32 | 128| ImGuiWindowFlags_NoDocking);
 
 	ImGui::SetWindowFontScale(10);
 	if (ImGui::Button("Play Again?", buttonSize))

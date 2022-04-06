@@ -44,16 +44,5 @@ void ProfilerSystem::storeSampleTime(__int64 elapsedTime)
 	sample->functionTime = elapsedTime;
 	
 	
-	CurrentSample.pop();
-
-
-
-	/*SampleData* sample = new SampleData();
-	sample->frameReference = currentFrame;
-	sample->functionTime = elapsedTime;
-
-	frameData[name].push_back(sample);*/
-
-
-	
+	CurrentSample.pop();	
 }

@@ -26,16 +26,6 @@ Bitmap::Bitmap(SDL_Renderer* renderer, std::string fileName, bool useTransparenc
 	
 };
 
-
-
-Bitmap* Bitmap::Instance()
-{
-	return nullptr;
-}
-
-
-
-
 Bitmap::~Bitmap()
 {
 	if (m_pbitmapTexture)

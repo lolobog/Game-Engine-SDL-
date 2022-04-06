@@ -18,8 +18,8 @@ Game::Game()
 		"My First Window", //title
 		1000, //initial x
 		300,  //initial y
-		screenWidth,  //width
-		screenHeight, //height
+		windowWidth,  //width
+		windowHeight, //height
 		0  //window behaviour flags
 
 
@@ -142,12 +142,12 @@ void Game::Update(void)
 
 
 
-		CheckEvents();
+		
 		SDL_RenderClear(m_Renderer);
 		
 		ImGui::NewFrame();
 		ImGui_ImplSDL2_NewFrame(m_Window);
-		ImGui::Begin("Show/Hide ImGui", 0,  2|8 | 16 | 32 | 128);
+		ImGui::Begin("Show/Hide ImGui", 0,  2|8 | 16 | 32 | 128| ImGuiWindowFlags_NoDocking);
 		if (ImGui::Button("Show/Hide ImGui"))
 		{
 			if (sManager.getInstance().showGUI== true)
@@ -427,7 +427,7 @@ void Game::Update(void)
 				//ImGui::LabelText("Total frame time", std::to_string(totalframeTime).c_str());
 				//ImGui::LabelText("Window width/ total frame Time", std::to_string(MinBlockWidth).c_str());
 				float TotalBlockWidthSoFar = 0;
-				int sampleCount = g_profileManager.GetFrameData().back()->GetNumberOfProfiles() + 1;
+				int sampleCount = g_profileManager.GetFrameData().back()->GetNumberOfSamples() + 1;
 				/*if (Snapshot.size() > 0)
 				{
 					sampleCount = Snapshot.back()->GetNumberOfProfiles()+1;

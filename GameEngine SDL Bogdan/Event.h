@@ -1,5 +1,7 @@
 #pragma once
-
+/**
+* Enumeration representing all the event types
+*/
 enum EventType
 {
 	Event_Object_Collected,
@@ -9,9 +11,14 @@ enum EventType
 
 
 };
-
+/**
+* Structure that represents the information about an event
+*/
 struct Variant
 {
+	/**
+* Enumeration representing all the information types
+*/
 	enum Type
 	{
 		TYPE_INTEGER,
@@ -20,9 +27,13 @@ struct Variant
 		TYPE_STRING_ID,
 		TYPE_COUNT
 	};
-
+	/**
+* Variable representing the type of variant
+*/
 	Type type;
-
+	/**
+* Storing the information as the desired type
+*/
 	union 
 	{
 		int asInteger;
@@ -35,7 +46,9 @@ struct Variant
 
 
 
-
+/**
+* Base Event class from which all further events will inherit
+*/
 class Event
 {
 	
@@ -44,13 +57,17 @@ public:
 	
 	
 };
-
+/**
+* Event to be triggered upon an explosion
+*/
 class ExplosionEvent : public Event
 {
 	Variant Position;
 	
 };
-
+/**
+* Event to be triggered upon a collection
+*/
 class CollectionEvent : public Event
 {
 	Variant Position;

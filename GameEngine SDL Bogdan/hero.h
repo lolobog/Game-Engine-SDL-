@@ -7,11 +7,17 @@
 class Hero : public GameObject
 {
 public: 
+	/**
+* Boolean representing if the Key was collected
+*/
 	bool keyCollected = false;
 
 	Hero(SDL_Renderer* renderer, Bitmap* bitmap, ImGuiIO& _io, float _w, float _h, float _x, float _y, float _z = 0);
 	~Hero();
 	
+	/**
+* Triggers upon a specific event being fired
+*/
 	void OnEvent(Event* event)
 	{
 		keyCollected = true;
@@ -19,14 +25,9 @@ public:
 
 	}
 
-	
-
-
-	void InputUpdate(Input input);
 
 	
 
 private:
-	int speed = 2;
-	int hp = 3;
+	
 };

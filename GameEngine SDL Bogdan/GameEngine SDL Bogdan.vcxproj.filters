@@ -72,9 +72,6 @@
     <ClCompile Include="imgui-master\backends\imgui_impl_sdl.cpp">
       <Filter>imGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="I_GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -155,9 +152,6 @@
     <ClInclude Include="imgui-master\backends\imgui_impl_sdl.h">
       <Filter>imGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="I_GUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -165,9 +159,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Profiler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Flamegraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Debugging.h">

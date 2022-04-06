@@ -26,52 +26,109 @@ class Game
 {
 	
 private:
+	/**
+* Main SDL Window
+*/
 	SDL_Window* m_Window;
+	/**
+* Main renderer used for generating all the images
+*/
 	SDL_Renderer* m_Renderer;
-	bool m_running;
-	Input PlayerInput;
+	/**
+* Frame Timer used to keep track of the game frame times
+*/
 	FrameTimer m_timer;
+	/**
+* Counter for loading in the assets
+*/
 	int count = 119;
+	/**
+* Vector containing all the assets
+*/
 	vector<Bitmap*> content;
+	/**
+* Variable representing the number of assets in the folder
+*/
 	int numberOfImages = 0;
-	float screenHeight = 720;
-	float screenWidth = 960;
-	float menuHeight = 10;
+	/**
+* Height of the window
+*/
+	float windowHeight = 720;
+	/**
+* Width of the window
+*/
+	float windowWidth = 960;
+	/**
+* Reference to the image being dragged
+*/
 	Bitmap* AssetMouseDrag;
+	/**
+* Vector storing all profile times
+*/
 	vector<Sample*> Snapshot;
+	/**
+* Reference to the previous frame to be displayed on the flame graph
+*/
 	Sample* previousFrame;
+	/**
+* Reference to the targeted frame to be displayed on the flame graph
+*/
 	Sample* targetFrame;
 	
 	
 
 public:
-	
+	/**
+* Default Game constructor
+*/
 	Game();
+	/**
+* Default Game destructor
+*/
 	~Game();
+	/**
+*  Game Scene Manager
+*/
 	SceneManager sManager;
+	/**
+*  Display background color set up
+*/
 	void SetDisplayColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+	/**
+*  Update the scene, GUI and anything else every frame
+*/
 	void Update(void) ;
-	void CheckEvents(void) {};
+	/**
+*  Update the texts 
+*/
 	void UpdateText(string msg, int x, int y, TTF_Font* font, SDL_Color colour);
 	
 
 	
-
+	/**
+*  Return a reference to the renderer
+*/
 	SDL_Renderer& GetRenderer()
 	{
 		return *m_Renderer;
 	}
 	
-
+	/**
+*  Return a reference to the SDL window
+*/
 	SDL_Window& GetWindow()
 	{
 		return *m_Window;
 	}
 	
-	Scene* scene;
 
-
+	/**
+*  Small font Text
+*/
 	TTF_Font* m_pSmallFont;
+	/**
+*  Big font Text
+*/
 	TTF_Font* m_pBigFont;
 
 
